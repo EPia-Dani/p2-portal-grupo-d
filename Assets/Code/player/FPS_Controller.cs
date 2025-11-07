@@ -16,7 +16,7 @@ public class FPS_Controller : MonoBehaviour
     [SerializeField, Range(-80f, 80f)] private float minPitch = -80f;
     [SerializeField] private Transform mPitchController;
 
-    private CharacterController controller;
+    public CharacterController controller;
 
     private float _mYaw;
     private float _mPitch;
