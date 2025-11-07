@@ -26,6 +26,7 @@ public class Portal : MonoBehaviour
         localDirection.z = -localDirection.z;
         otherPortal.reflectionCamera.transform.forward= otherPortal.transform.TransformDirection(localDirection);
      
+        float distance = Vector3.Distance( otherPortal.reflectionCamera.transform.position, otherPortal.transform.position );
         otherPortal.reflectionCamera.nearClipPlane= Mathf.Max(0.0f,distance)+effectNearPlane;
 
 
