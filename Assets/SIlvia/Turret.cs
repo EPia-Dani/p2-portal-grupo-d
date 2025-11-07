@@ -47,6 +47,9 @@ public class Turret : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.isKinematic = true;
+
+        if (sparks != null) sparks.Stop();
+        if (smoke != null) smoke.Stop();
     }
 
     private void Update()
@@ -71,15 +74,19 @@ public class Turret : MonoBehaviour
     {
         float angle = Vector3.Angle(transform.up, Vector3.up);
 
-        if (angle > m_MaxAngle)
+        if (!hasFallen && angle > m_MaxAngle)
         {
             hasFallen = true;
             rb.isKinematic = false;
             m_LaserActive = false;
-            if (sparks != null) sparks.Play();
-            if (smoke != null) smoke.Play();
+
+            if (sparks != null && !sparks.isPlaying) sparks.Play();
+            if (smoke != null && !smoke.isPlaying) smoke.Play();
+
+            if (fallSound != null && !fallSound.isPlaying) fallSound.Play();
         }
     }
+
 
     private void UpdateLaser()
     {
@@ -90,16 +97,21 @@ public class Turret : MonoBehaviour
         RaycastHit hit;
         Vector3 endPos;
 
-        if (!canSeePlayer)
+        if (!canSeePlayer && !Physics.Raycast(new Ray(startPos, forward), m_MaxDistance, m_CollisionLayerMask))
         {
             m_LineRenderer.enabled = false;
             return;
         }
 
         if (Physics.Raycast(new Ray(startPos, forward), out hit, m_MaxDistance, m_CollisionLayerMask))
+        {
             endPos = startPos + forward * hit.distance;
+        }
+
         else
+        {
             endPos = startPos + forward * m_MaxDistance;
+        }
 
         m_LineRenderer.SetPosition(0, startPos);
         m_LineRenderer.SetPosition(1, endPos);

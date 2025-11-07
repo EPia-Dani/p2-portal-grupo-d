@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlayerCamera
+  - Cube
+  - RefractionCube
+  - SwitchTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Refraction
   - Water
   - UI
   - 
