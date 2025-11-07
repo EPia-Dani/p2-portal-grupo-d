@@ -10,6 +10,7 @@ public class Portal : MonoBehaviour
     public Camera reflectionCamera;
     [SerializeField] private Transform reflectionTransform;
     public float effectNearPlane=-0.5f;
+    public GameObject wall;
     void Start(){
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
     }
@@ -28,7 +29,20 @@ public class Portal : MonoBehaviour
      
         float distance = Vector3.Distance( otherPortal.reflectionCamera.transform.position, otherPortal.transform.position );
         otherPortal.reflectionCamera.nearClipPlane= Mathf.Max(0.0f,distance)+effectNearPlane;
-
-
     }
+
+    public void OnNewPortalPosition(GameObject newWall)    // TODO: attempts to create a new portal in a wall
+    {
+        if (newWall != null)    //TODO: call a method to check if it's possible to create a portal
+        {
+            wall=newWall;
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    
 }
