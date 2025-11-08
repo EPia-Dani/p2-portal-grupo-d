@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PortalGun : MonoBehaviour
@@ -21,6 +22,7 @@ public class PortalGun : MonoBehaviour
     [SerializeField] private float offset = 0.05f;
     private string tagOrange = "OrangePortal";
     private string tagBlue = "BluePortal";
+
 
     void Start()
     {
@@ -61,21 +63,33 @@ public class PortalGun : MonoBehaviour
             if (hit.collider.CompareTag("validWall"))
             {
                 GameObject preview = Instantiate(previewPortal, hit.point, Quaternion.LookRotation(-hit.normal));
-                bool isValid = isValidSpaw(preview);
+                bool isValid = isValidSpawn(preview);
                 Destroy(preview);
                 if (isValid)
                 {
                     GameObject actualPortal = GameObject.FindGameObjectWithTag(tag);
                     if (actualPortal != null) { Destroy(actualPortal); Debug.Log("PortalGun: object found"); }
                     Vector3 spawnPos= hit.point + hit.normal * offset;
-                    Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
+                    GameObject newPortal =Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
+
+                    //--PortalSetUp, by dvpotato :v --//
+                    newPortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
+                    if (tag.Equals(tagOrange)){
+                        newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagBlue));
+                    }
+                    else
+                    {
+                        newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagOrange));
+                    }
+
+                    //-- --//
                 }
             }
 
         }
     }
     
-    private bool isValidSpaw(GameObject previewInstance)
+    private bool isValidSpawn(GameObject previewInstance)
     {
         Transform[] validPoints = previewInstance.GetComponentsInChildren<Transform>();
 

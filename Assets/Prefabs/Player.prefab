@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4897809687777107015}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   maxPitch: 80
   minPitch: -80
   mPitchController: {fileID: 4479545015739563260}
+  controller: {fileID: 0}
 --- !u!114 &4897809687777107015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +202,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a29bc284-469a-432a-b60b-885bb8e0fb67
     m_ActionName: 'FPSControls/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e43171b4-1e28-4e89-80f1-30bddcf7e1ad
+    m_ActionName: 'FPSControls/RIghtShoot[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 231e2791-e73f-4256-acb3-4829d1511145
+    m_ActionName: 'FPSControls/LeftShoot[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: FPSControls
