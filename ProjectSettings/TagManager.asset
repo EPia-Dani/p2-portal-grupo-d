@@ -10,6 +10,8 @@ TagManager:
   - SwitchTarget
   - validPoint
   - validWall
+  - BluePortal
+  - OrangePortal
   layers:
   - Default
   - TransparentFX

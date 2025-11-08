@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7790431049900044548}
   m_Layer: 0
   m_Name: BluePortal
-  m_TagString: Untagged
+  m_TagString: BluePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   reflectionCamera: {fileID: 7233534253908203119}
   reflectionTransform: {fileID: 4639117109143894998}
   effectNearPlane: 0
+  wall: {fileID: 0}
 --- !u!1 &4336331585322787517
 GameObject:
   m_ObjectHideFlags: 0

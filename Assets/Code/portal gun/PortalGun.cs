@@ -15,8 +15,12 @@ public class PortalGun : MonoBehaviour
     Camera playerCamera;
 
     [SerializeField] private float maxShootDistance = 100f;   
-    [SerializeField] private float maxNormalAngle = 20f;      
+    [SerializeField] private float maxNormalAngle = 20f;
     [SerializeField] private float maxPointDistance = 0.1f;
+
+    [SerializeField] private float offset = 0.05f;
+    private string tagOrange = "OrangePortal";
+    private string tagBlue = "BluePortal";
 
     void Start()
     {
@@ -36,17 +40,17 @@ public class PortalGun : MonoBehaviour
     public void OnRightClick()
     {
 
-        handleShoot(OrangePortal);
+        handleShoot(OrangePortal,tagOrange);
     }
     public void OnLeftClick()
     {
-        handleShoot(BluePortal);
+        handleShoot(BluePortal,tagBlue);
 
 
     }
 
 
-    private void handleShoot(GameObject portal)
+    private void handleShoot(GameObject portal,string tag)
     {
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
@@ -61,7 +65,10 @@ public class PortalGun : MonoBehaviour
                 Destroy(preview);
                 if (isValid)
                 {
-                    Instantiate(portal, hit.point, Quaternion.LookRotation(-hit.normal));
+                    GameObject actualPortal = GameObject.FindGameObjectWithTag(tag);
+                    if (actualPortal != null) { Destroy(actualPortal); Debug.Log("PortalGun: object found"); }
+                    Vector3 spawnPos= hit.point + hit.normal * offset;
+                    Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
                 }
             }
 

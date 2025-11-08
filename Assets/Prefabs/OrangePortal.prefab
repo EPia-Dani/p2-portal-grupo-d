@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 1580679659980883664}
   m_Layer: 0
   m_Name: OrangePortal
-  m_TagString: Untagged
+  m_TagString: OrangePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -298,3 +298,4 @@ MonoBehaviour:
   reflectionCamera: {fileID: 301079820753813951}
   reflectionTransform: {fileID: 2702649977223253509}
   effectNearPlane: 0
+  wall: {fileID: 0}
