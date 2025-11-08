@@ -3,43 +3,114 @@ using UnityEngine;
 public class PortalGun : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject OrangePortal;
+
 
     [SerializeField]
-    GameObject BluePortal;
+    public GameObject OrangePortal;
+    [SerializeField]
+    public GameObject BluePortal;
 
+    [SerializeField]
+    public GameObject previewPortal;
     Camera playerCamera;
 
-    float shootDistance = 20f;
+    [SerializeField] private float maxShootDistance = 100f;   
+    [SerializeField] private float maxNormalAngle = 20f;      
+    [SerializeField] private float maxPointDistance = 0.1f;
+
+    void Start()
+    {
+        playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera")?.GetComponent<Camera>();
+        if (playerCamera == null)
+        {
+            Debug.LogWarning("PortalGun: camera not set");
+        }
+        if (OrangePortal == null || BluePortal == null)
+        {
+            Debug.LogWarning("PortalGUn: portal not set, check inspector");
+        }
+
+
+    }
 
     public void OnRightClick()
     {
-        ShootPortal(OrangePortal);
+
+        handleShoot(OrangePortal);
     }
     public void OnLeftClick()
     {
-        ShootPortal(BluePortal);
+        handleShoot(BluePortal);
+
+
     }
 
 
-    void ShootPortal(GameObject portal)
+    private void handleShoot(GameObject portal)
     {
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, shootDistance))
+        if (Physics.Raycast(ray, out hit, maxShootDistance))
         {
-            Vector3 spawnPos = hit.point;
-            Quaternion spawnRot = Quaternion.LookRotation(hit.normal); 
-
-            PortalValidator portalValidator = portal.GetComponent<PortalValidator>();
-            if (portalValidator.IsValidPosition(spawnPos, spawnRot))
+            if (hit.collider.CompareTag("validWall"))
             {
-                portal.transform.position = spawnPos;
-                portal.transform.rotation = spawnRot;
-                portal.gameObject.SetActive(true);
+                GameObject preview = Instantiate(previewPortal, hit.point, Quaternion.LookRotation(-hit.normal));
+                bool isValid = isValidSpaw(preview);
+                Destroy(preview);
+                if (isValid)
+                {
+                    Instantiate(portal, hit.point, Quaternion.LookRotation(-hit.normal));
+                }
             }
+
         }
     }
+    
+    private bool isValidSpaw(GameObject previewInstance)
+    {
+        Transform[] validPoints = previewInstance.GetComponentsInChildren<Transform>();
+
+        foreach (Transform point in validPoints)
+        {
+            if (!point.CompareTag("validPoint"))
+                continue;
+
+            Vector3 pointPos = point.position;
+            Vector3 direction = (pointPos - playerCamera.transform.position).normalized;
+
+            if (Physics.Raycast(playerCamera.transform.position, direction, out RaycastHit hit, maxShootDistance))
+            {
+                float distancia = Vector3.Distance(hit.point, pointPos);
+                if (distancia > maxPointDistance)
+                {
+                    Debug.DrawLine(hit.point, pointPos, Color.red, 1f);
+                    return false;
+                }
+
+                float angle = Vector3.Angle(hit.normal, -previewInstance.transform.forward);
+                if (angle > maxNormalAngle)
+                {
+                    Debug.DrawRay(hit.point, hit.normal * 0.3f, Color.yellow, 1f);
+                    return false;
+                }
+
+                if (!hit.collider.CompareTag("validWall"))
+                {
+                    Debug.DrawRay(hit.point, hit.normal * 0.3f, Color.magenta, 1f);
+                    return false;
+                }
+
+                Debug.DrawLine(playerCamera.transform.position, pointPos, Color.green, 0.3f);
+            }
+            else
+            {
+                Debug.DrawLine(playerCamera.transform.position, pointPos, Color.red, 1f);
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

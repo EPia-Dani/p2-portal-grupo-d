@@ -8,6 +8,8 @@ TagManager:
   - Cube
   - RefractionCube
   - SwitchTarget
+  - validPoint
+  - validWall
   layers:
   - Default
   - TransparentFX
