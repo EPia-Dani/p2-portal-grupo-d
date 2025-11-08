@@ -107,13 +107,19 @@ public class Portal : MonoBehaviour
         */
 
         Vector3 l_Position = reflectionTransform.transform.InverseTransformPoint(player.transform.position);
-        l_Position.z += 0.5f;
+        l_Position.z -= 0.1f;
         l_Position.z= -l_Position.z;
         Vector3 l_Direction =reflectionTransform.transform.InverseTransformDirection(-player.transform.forward);
 
         Vector3 targetPosition= l_Position+player.transform.position;
-        player.GetComponent<CharacterController>().Move(otherPortal.transform.TransformPoint(targetPosition));
-        //player.transform.position=(otherPortal.transform.TransformPoint(l_Position));
+        //player.GetComponent<CharacterController>().Move(otherPortal.transform.TransformPoint(targetPosition));
+        player.GetComponent<CharacterController>().enabled = false;
+        player.transform.position=(otherPortal.transform.TransformPoint(l_Position));
+        player.GetComponent<CharacterController>().enabled = true;
+        Debug.Log("teleported from portal");
+
+        //player.GetComponent<FPS_Controller>().teleport(otherPortal.transform.TransformPoint(targetPosition));
+
 
     }
 }
