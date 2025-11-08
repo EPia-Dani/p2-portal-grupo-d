@@ -119,6 +119,26 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &169031727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7664295385128735393, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7523651020728682961}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &169031729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169031727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e29ac9e526ac6428bf835739b82f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrangePortal: {fileID: 977490745}
+  BluePortal: {fileID: 1084173834}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +380,7 @@ GameObject:
   - component: {fileID: 977490748}
   - component: {fileID: 977490747}
   - component: {fileID: 977490746}
+  - component: {fileID: 977490750}
   m_Layer: 0
   m_Name: portal 1
   m_TagString: Untagged
@@ -456,6 +477,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &977490750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977490745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf04985fe5a0ce5b9acf2d1e7357d290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validPoints: []
+  maxDistance: 0.5
+  maxAngle: 10
+  playerCamera: {fileID: 1639106362}
 --- !u!1 &1084173834
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +505,7 @@ GameObject:
   - component: {fileID: 1084173837}
   - component: {fileID: 1084173836}
   - component: {fileID: 1084173835}
+  - component: {fileID: 1084173839}
   m_Layer: 0
   m_Name: portal 2
   m_TagString: Untagged
@@ -566,6 +604,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1084173839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084173834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf04985fe5a0ce5b9acf2d1e7357d290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validPoints: []
+  maxDistance: 0.5
+  maxAngle: 10
+  playerCamera: {fileID: 1639106362}
+--- !u!20 &1639106362 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9125436305483551504, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7523651020728682961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7523651020728682961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -574,10 +634,140 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: e43171b4-1e28-4e89-80f1-30bddcf7e1ad
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: 231e2791-e73f-4256-acb3-4829d1511145
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: 'FPSControls/RIghtShoot[/Mouse/rightButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: 'FPSControls/LeftShoot[/Mouse/leftButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_DeviceRegainedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ControlsChangedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_DeviceRegainedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ControlsChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_DeviceRegainedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ControlsChangedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169031729}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169031729}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnRightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnRightClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PortalGun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PortalGun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897809687777107015, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5728487155079494344, guid: 7e4bdabc6af88014196841c4e7f31ba8,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859167127769732988, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 6460784896127851524, guid: 7e4bdabc6af88014196841c4e7f31ba8,
         type: 3}
@@ -632,7 +822,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7664295385128735393, guid: 7e4bdabc6af88014196841c4e7f31ba8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 169031729}
   m_SourcePrefab: {fileID: 100100000, guid: 7e4bdabc6af88014196841c4e7f31ba8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
