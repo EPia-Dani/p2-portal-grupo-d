@@ -3,9 +3,9 @@
 public class RefractionCube : MonoBehaviour
 {
     [Header("Referències")]
-    public Transform core;            
+    public Transform core;          
     public LineRenderer lineRenderer;
-    public LayerMask collisionMask;
+    public LayerMask collisionMask = ~0;
 
     [Header("Configuració")]
     public float maxDistance = 100f;
@@ -14,6 +14,7 @@ public class RefractionCube : MonoBehaviour
 
     void Update()
     {
+
         if (lineRenderer != null)
             lineRenderer.enabled = createRefraction;
 
@@ -24,24 +25,31 @@ public class RefractionCube : MonoBehaviour
     {
 
         createRefraction = true;
-
         Vector3 startPos = core.position;
         Vector3 dir = core.forward;
 
         lineRenderer.SetPosition(0, startPos);
 
         RaycastHit nextHit;
-        if (Physics.Raycast(startPos, dir, out nextHit, maxDistance, collisionMask))
+        if (Physics.Raycast(startPos, dir, out nextHit, maxDistance, collisionMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderer.SetPosition(1, nextHit.point);
+
+            if (nextHit.collider.CompareTag("Cube"))
+            {
+                return;
+            }
 
             if (nextHit.collider.CompareTag("RefractionCube"))
             {
                 nextHit.collider.GetComponent<RefractionCube>()?.CreateRefraction(nextHit);
+                return;
             }
-            else if (nextHit.collider.CompareTag("LaserReceiver"))
+
+            if (nextHit.collider.CompareTag("LaserReceiver"))
             {
                 nextHit.collider.GetComponent<LaserReceiver>()?.ActivateReceiver();
+                return;
             }
         }
         else
@@ -50,4 +58,6 @@ public class RefractionCube : MonoBehaviour
         }
     }
 }
+
+
 
