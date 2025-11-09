@@ -12,6 +12,7 @@ TagManager:
   - validWall
   - BluePortal
   - OrangePortal
+  - LaserReceiver
   layers:
   - Default
   - TransparentFX
