@@ -79,10 +79,10 @@ public class Turret : MonoBehaviour
             hasFallen = true;
             rb.isKinematic = false;
             m_LaserActive = false;
+            m_LineRenderer.enabled = false;
 
             if (sparks != null && !sparks.isPlaying) sparks.Play();
             if (smoke != null && !smoke.isPlaying) smoke.Play();
-
             if (fallSound != null && !fallSound.isPlaying) fallSound.Play();
         }
     }
@@ -106,8 +106,25 @@ public class Turret : MonoBehaviour
         if (Physics.Raycast(new Ray(startPos, forward), out hit, m_MaxDistance, m_CollisionLayerMask))
         {
             endPos = startPos + forward * hit.distance;
-        }
 
+            if (hit.collider.CompareTag("Player"))
+            {
+                PlayerHealth ph = hit.collider.GetComponentInParent<PlayerHealth>();
+                if (ph != null)
+                {
+                    ph.TakeDamage(ph.maxHealth);
+                }
+            }
+
+            else if (hit.collider.CompareTag("Turret"))
+            {
+                Turret otherTurret = hit.collider.GetComponentInParent<Turret>();
+                if (otherTurret != null)
+                {
+                    otherTurret.DisableTurret();
+                }
+            }
+        }
         else
         {
             endPos = startPos + forward * m_MaxDistance;
@@ -115,23 +132,6 @@ public class Turret : MonoBehaviour
 
         m_LineRenderer.SetPosition(0, startPos);
         m_LineRenderer.SetPosition(1, endPos);
-
-        if (hit.collider.CompareTag("Player"))
-        {
-            hit.collider.GetComponent<PlayerHealth>()?.TakeDamage(laserDamage * Time.deltaTime);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (m_LineRenderer != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(
-                m_LineRenderer.transform.position,
-                m_LineRenderer.transform.position + m_LineRenderer.transform.forward * m_MaxDistance
-            );
-        }
     }
 
     private void RotateToPlayer()
@@ -160,11 +160,14 @@ public class Turret : MonoBehaviour
     {
         if (hasFallen) return;
 
-        if (collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player") ||
+            collision.collider.CompareTag("RefractionCube") ||
+            collision.collider.CompareTag("Turret"))
         {
             hasFallen = true;
             rb.isKinematic = false;
             m_LaserActive = false;
+            m_LineRenderer.enabled = false;
         }
 
         if (fallSound != null) fallSound.Play();
@@ -188,6 +191,19 @@ public class Turret : MonoBehaviour
         return false;
     }
 
+    public void DisableTurret()
+    {
+        if (hasFallen) return;
+
+        hasFallen = true;
+        rb.isKinematic = false;
+        m_LaserActive = false;
+        m_LineRenderer.enabled = false;
+
+        if (sparks != null) sparks.Play();
+        if (smoke != null) smoke.Play();
+        if (fallSound != null) fallSound.Play();
+    }
 }
 
 

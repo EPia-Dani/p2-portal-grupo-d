@@ -13,6 +13,7 @@ TagManager:
   - BluePortal
   - OrangePortal
   - LaserReceiver
+  - Turret
   layers:
   - Default
   - TransparentFX

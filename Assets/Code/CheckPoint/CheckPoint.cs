@@ -8,6 +8,8 @@ public class Checkpoint : MonoBehaviour
     public float duracionMensaje = 2f;
 
     private bool activado = false;
+    private bool mostrandoMensaje = false;
+    private float tiempoRestanteMensaje = 0f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,25 +22,43 @@ public class Checkpoint : MonoBehaviour
                 GameManager.instance.SetCheckpoint(transform.position);
             }
 
-            StartCoroutine(MostrarMensaje());
+            MostrarMensaje();
         }
     }
 
-    private System.Collections.IEnumerator MostrarMensaje()
+    private void Update()
+    {
+        if (mostrandoMensaje)
+        {
+            tiempoRestanteMensaje -= Time.deltaTime;
+
+            if (tiempoRestanteMensaje <= 0f)
+            {
+                OcultarMensaje();
+            }
+        }
+    }
+
+    private void MostrarMensaje()
     {
         if (mensajeUI != null)
         {
             mensajeUI.text = "¡Punto de partida guardado!";
             mensajeUI.gameObject.SetActive(true);
+            mostrandoMensaje = true;
+            tiempoRestanteMensaje = duracionMensaje;
         }
+    }
 
-        yield return new WaitForSeconds(duracionMensaje);
-
+    private void OcultarMensaje()
+    {
         if (mensajeUI != null)
         {
             mensajeUI.gameObject.SetActive(false);
         }
+        mostrandoMensaje = false;
     }
 }
+
 
 
