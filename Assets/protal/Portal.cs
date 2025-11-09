@@ -11,6 +11,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private Transform reflectionTransform;
     public float effectNearPlane=-0.5f;
     public GameObject wall;
+
     void Start(){
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
     }
@@ -18,14 +19,12 @@ public class Portal : MonoBehaviour
 
     void LateUpdate()
     {
-
-        if (otherPortal != null&&wall!=null)
+        if (otherPortal != null && wall != null)
         {
             Vector3 worldPosition = playerCamera.transform.position;
             Vector3 localPosition = reflectionTransform.InverseTransformPoint(worldPosition);
             localPosition.z = -localPosition.z;
             otherPortal.reflectionCamera.transform.position = otherPortal.transform.TransformPoint(localPosition);
-
 
             Vector3 worldDirection = playerCamera.transform.forward;
             Vector3 localDirection = reflectionTransform.InverseTransformDirection(worldDirection);
@@ -66,7 +65,7 @@ public class Portal : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        
+
 
         Transform playerTransform = other.transform;
 
@@ -74,37 +73,13 @@ public class Portal : MonoBehaviour
 
         float distance = portalPlane.GetDistanceToPoint(playerTransform.position);
 
-        if (distance < 0.0f)
+        if (distance < 0f)
         {
-            
-            TeleportPlayer(GameObject.FindGameObjectWithTag("Player"));
+
+            PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);
         }
-        
-    }
-    void TeleportPlayer(GameObject player)
-    {
-        Vector3 l_Position = reflectionTransform.transform.InverseTransformPoint(player.transform.position);
-        l_Position.z -= 0.1f;
-        l_Position.z= -l_Position.z;
-        
-        Vector3 l_Direction =reflectionTransform.transform.InverseTransformDirection(-player.transform.forward);
-
-        Vector3 targetPosition= l_Position+player.transform.position;
-
-        player.GetComponent<CharacterController>().enabled = false;
-        player.transform.position= otherPortal.transform.TransformPoint(l_Position);
-        player.transform.forward = otherPortal.transform.TransformDirection(l_Direction);
-        player.GetComponent<CharacterController>().enabled = true;
 
     }
-
-    public void setWall(GameObject newWall)
-    {
-        wall=newWall;
-    }
-
-    public void setOtherPortal(GameObject newOtherPortal)
-    {
-        otherPortal = newOtherPortal.GetComponent<Portal>();
-    }
+    public void setWall(GameObject newWall) { wall = newWall; } 
+    public void setOtherPortal(GameObject newOtherPortal) { otherPortal = newOtherPortal.GetComponent<Portal>(); }
 }

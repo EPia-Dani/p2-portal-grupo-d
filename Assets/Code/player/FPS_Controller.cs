@@ -26,6 +26,11 @@ public class FPS_Controller : MonoBehaviour
     private Vector3 _moveVector;
     private Vector3 _targetTeleport;
 
+
+    private bool isTeleporting = false;
+    private float teleportTimer = 0f;
+    private const float teleportCooldown = 0.2f; 
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -40,9 +45,16 @@ public class FPS_Controller : MonoBehaviour
 
     void Update()
     {
-
-
-    HandleMovement();
+        if (isTeleporting)
+        {
+            teleportTimer -= Time.deltaTime;
+            if (teleportTimer < 0f)
+            {
+                isTeleporting = false;
+            }
+            return;
+        }
+        HandleMovement();
         HandleRotation();
     }
     private void HandleRotation()
@@ -98,6 +110,45 @@ public class FPS_Controller : MonoBehaviour
         {
             _velocity.y = jumpForce;
         }
+    }
+    void OnEnable()
+    {
+        PortalEvents.OnPlayerTeleported += HandleTeleportEvent;
+    }
+
+    void OnDisable()
+    {
+        PortalEvents.OnPlayerTeleported -= HandleTeleportEvent;
+    }
+    private void HandleTeleportEvent(Portal fromPortal, Portal toPortal, GameObject player)
+    {
+        
+        if (player != gameObject || isTeleporting) return;
+
+        isTeleporting = true;
+        teleportTimer = teleportCooldown;
+
+        controller.enabled = false;
+
+        Transform portalA = fromPortal.transform;
+        Transform portalB = toPortal.transform;
+
+        //calculate position
+        Vector3 localPos = portalA.InverseTransformPoint(transform.position);
+        localPos.z = -localPos.z;
+        Vector3 finalPos = portalB.TransformPoint(localPos);
+
+        //calculate dir
+        Vector3 localDir = portalA.InverseTransformDirection(transform.forward);
+        localDir.z = -localDir.z;
+        Vector3 finalDir = portalB.TransformDirection(localDir);
+
+        //apply 
+        transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
+        _velocity = Vector3.zero;
+
+        controller.enabled = true;
+
     }
 
 
