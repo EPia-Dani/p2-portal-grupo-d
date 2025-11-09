@@ -2,36 +2,35 @@ using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
 {
-    [Header("Settings Laser")]
     public float maxDistance = 100f;
-    public LayerMask collisionMask;
+    public LayerMask collisionMask = ~0;
     public LineRenderer lineRenderer;
 
     void Update()
     {
-        DispararLaser();
-    }
-
-    private void DispararLaser()
-    {
-        if (lineRenderer == null) return;
+        if (!lineRenderer) return;
 
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, transform.position);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, collisionMask))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, collisionMask, QueryTriggerInteraction.Ignore))
         {
             lineRenderer.SetPosition(1, hit.point);
+
+            if (hit.collider.CompareTag("Cube"))
+                return;
 
             if (hit.collider.CompareTag("RefractionCube"))
             {
                 hit.collider.GetComponent<RefractionCube>()?.CreateRefraction(hit);
+                return;
             }
 
-            else if (hit.collider.CompareTag("LaserReceiver"))
+            if (hit.collider.CompareTag("LaserReceiver"))
             {
                 hit.collider.GetComponent<LaserReceiver>()?.ActivateReceiver();
+                return;
             }
         }
         else
@@ -40,4 +39,5 @@ public class LaserEmitter : MonoBehaviour
         }
     }
 }
+
 
