@@ -76,13 +76,16 @@ public class PortalGun : MonoBehaviour
                     newPortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                     if (tag.Equals(tagOrange)){
                         newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagBlue));
+                        GameObject.FindGameObjectWithTag(tagBlue).GetComponent<Portal>().setOtherPortal(newPortal);
+
                     }
-                    else
+                    else if(tag.Equals(BluePortal)) 
                     {
                         newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagOrange));
+                        GameObject.FindGameObjectWithTag(tagOrange).GetComponent<Portal>().setOtherPortal(newPortal);
+
                     }
 
-                    //-- --//
                 }
             }
 

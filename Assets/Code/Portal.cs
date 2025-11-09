@@ -88,7 +88,6 @@ public class Portal : MonoBehaviour
         l_Position.z= -l_Position.z;
         
         Vector3 l_Direction =reflectionTransform.transform.InverseTransformDirection(-player.transform.forward);
-        l_Direction.x=-l_Direction.x;
 
         Vector3 targetPosition= l_Position+player.transform.position;
 

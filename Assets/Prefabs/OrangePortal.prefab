@@ -113,8 +113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076707131384769168}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00030677597, y: -0.7719355, z: 0.0003725201, w: 0.63570064}
-  m_LocalPosition: {x: 2.2930417, y: -0.006607771, z: -4.74109}
+  m_LocalRotation: {x: -0.47658953, y: 0.51402915, z: 0.4313217, w: 0.5679772}
+  m_LocalPosition: {x: -2.5206423, y: -3.1814814, z: -13.125056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -151,7 +151,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 5.2664995
+  near clip plane: 13.738361
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -274,7 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6a91c324635544f9ccc67185bba85f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherPortal: {fileID: 0}
+  otherPortal: {fileID: 7790431049900044548, guid: 5970d6559b325904bbbd1afa39017616,
+    type: 3}
   reflectionCamera: {fileID: 301079820753813951}
   reflectionTransform: {fileID: 2702649977223253509}
   effectNearPlane: 0

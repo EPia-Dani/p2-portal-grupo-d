@@ -24,7 +24,6 @@ public class FPS_Controller : MonoBehaviour
     private Vector2 _inputLook;
     private Vector3 _velocity;
     private Vector3 _moveVector;
-    private bool _teleporting;
     private Vector3 _targetTeleport;
 
     void Start()
@@ -43,20 +42,9 @@ public class FPS_Controller : MonoBehaviour
     {
 
 
-            HandleMovement();
+    HandleMovement();
         HandleRotation();
     }
-
-  /*  private void LateUpdate()
-    {
-        if (_teleporting)
-        {
-            _teleporting = false;
-            transform.position = _targetTeleport;
-            Debug.Log("teleported from FPS_controller");
-        }
-    }*/
-
     private void HandleRotation()
     {
         if (_inputLook.sqrMagnitude < 0.0001f) return;
@@ -112,9 +100,5 @@ public class FPS_Controller : MonoBehaviour
         }
     }
 
-    public void teleport(Vector3 newPosition)
-    {
-        _teleporting = true;
-        _targetTeleport = newPosition;
-    }
+
 }
