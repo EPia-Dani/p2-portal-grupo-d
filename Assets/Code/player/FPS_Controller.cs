@@ -27,9 +27,7 @@ public class FPS_Controller : MonoBehaviour
     private Vector3 _targetTeleport;
 
 
-    private bool isTeleporting = false;
-    private float teleportTimer = 0f;
-    private const float teleportCooldown = 0.02f; 
+
 
     void Start()
     {
@@ -47,15 +45,6 @@ public class FPS_Controller : MonoBehaviour
 
     void Update()
     {
-        if (isTeleporting)
-        {
-            teleportTimer -= Time.deltaTime;
-            if (teleportTimer < 0f)
-            {
-                isTeleporting = false;
-            }
-            return;
-        }
         HandleMovement();
         HandleRotation();
     }
@@ -125,11 +114,6 @@ public class FPS_Controller : MonoBehaviour
     private void HandleTeleportEvent(Portal fromPortal, Portal toPortal, GameObject player)
     {
         
-        if (player != gameObject || isTeleporting) return;
-
-        isTeleporting = true;
-        teleportTimer = teleportCooldown;
-
         controller.enabled = false;
 
         Transform portalA = fromPortal.transform;
