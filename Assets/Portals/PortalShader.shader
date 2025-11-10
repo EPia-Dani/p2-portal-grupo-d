@@ -5,6 +5,8 @@ Shader "Hidden/PortalShader"
         _MainTex ("Texture", 2D) = "white" {}
         _MaskTex("Mask texture", 2D) = "white" {}
         _Cutout("Cutout", Range(0.0, 1.0)) = 0.5 
+        _EdgeCutout("Cutout of the edge", Range(0.0, 1.0)) = 0.5 
+        _EdgeTex("Edge texture", 2D) = "white"{}
     }
     SubShader
     { 
@@ -46,15 +48,48 @@ Shader "Hidden/PortalShader"
             }
             sampler2D _MainTex;
             sampler2D _MaskTex;
+            sampler2D _EdgeTex;
             float _Cutout;
+            float _EdgeCutout;
+
             fixed4 frag (v2f i) : SV_Target
             {
                 i.screenPos /= i.screenPos.w;
-                fixed4 l_MaskColor= tex2D(_MaskTex, i.uv);
-                if (l_MaskColor.a < _Cutout)
-                clip(-1);
+
+                fixed4 l_MaskColor= tex2D(_MaskTex, i.uv); 
+                
+                if (l_MaskColor.a < _Cutout) clip(-1); 
+                
                 fixed4 col = tex2D(_MainTex, float2(i.screenPos.x, i.screenPos.y));
+
+                fixed4 edge = tex2D(_EdgeTex, i.uv);
+
+                if(edge.a >_EdgeCutout){
+                    return edge;
+                    }
+                
                 return col;
+                /*
+                i.screenPos /= i.screenPos.w;
+                fixed4 mask = tex2D(_MaskTex, i.uv);
+                fixed4 edge = tex2D(_EdgeTex, i.uv);
+
+                // Portal area (inside mask)
+                if (mask.a >= _Cutout)
+                {
+                    return tex2D(_MainTex, float2(i.screenPos.x, i.screenPos.y));
+                }
+
+                // Edge area (outside mask)
+                if (edge.a > 0.08)
+                {
+                    return edge;
+                }
+
+                // Otherwise, nothing (fully clipped)
+                clip(-1);
+                return 0;
+                */
             }
             ENDCG
         }
