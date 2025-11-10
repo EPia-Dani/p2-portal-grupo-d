@@ -14,13 +14,16 @@ public class AttachObject : MonoBehaviour
 
     //detect both layers
 
-    [SerializeField] private LayerMask cubeLayer;
+   [SerializeField] private LayerMask cubeLayer;
     [SerializeField] private LayerMask turretLayer;
-    private LayerMask combinedMask;
+    private LayerMask combinedMask; 
+
+    private FPS_Controller playerController;
 
     void Start()
     {
-        combinedMask = cubeLayer | turretLayer;
+            playerController = GetComponentInParent<FPS_Controller>();
+
     }
     public void OnCatch(InputAction.CallbackContext context)
     {
@@ -29,7 +32,7 @@ public class AttachObject : MonoBehaviour
         {
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxCatchDistance, combinedMask))
+            if (Physics.Raycast(ray, out hit, maxCatchDistance))
             {
                 Debug.Log(hit.collider.gameObject.tag);
                 if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag))
@@ -84,9 +87,20 @@ public class AttachObject : MonoBehaviour
             {
                 attachObject.transform.SetParent(null);
             }
-            attachObject.GetComponent<Rigidbody>().isKinematic = false;
+            Rigidbody rb = attachObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+
+            Vector3 playerVelocity = Vector3.zero;
+            
+            if (playerController != null)
+            {
+                playerVelocity = playerController.GetVelocity();
+                rb.linearVelocity = playerVelocity;
+            }
+
             attachObject= null;
-            holding= false;
+            holding = false;
+            
 
         }
 
