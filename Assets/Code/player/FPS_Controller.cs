@@ -27,6 +27,8 @@ public class FPS_Controller : MonoBehaviour
     private Vector3 _targetTeleport;
 
 
+    private Vector2 _prevLookInput;
+    private Vector2 _lookVelocity;
 
 
     void Start()
@@ -50,13 +52,16 @@ public class FPS_Controller : MonoBehaviour
     }
     private void HandleRotation()
     {
-        if (_inputLook.sqrMagnitude < 0.0001f) return;
+        if (_inputLook.sqrMagnitude < 0.0001f) { _lookVelocity = Vector2.zero; return; }
 
         float lookX = _inputLook.x * lookSensitivity * rotationSpeed * Time.deltaTime;
         float lookY = _inputLook.y * lookSensitivity * rotationSpeed * Time.deltaTime;
 
+        _lookVelocity = (_inputLook - _prevLookInput) / Time.deltaTime;
+        _prevLookInput=_inputLook;
+
         _mYaw += lookX;
-        _mPitch += (invertPitch ? lookY : -lookY);
+        _mPitch += invertPitch ? lookY : -lookY;
 
         _mPitch = Mathf.Clamp(_mPitch, minPitch, maxPitch);
 
@@ -74,6 +79,10 @@ public class FPS_Controller : MonoBehaviour
 
             _moveVector = transform.TransformDirection(_moveVector);
             controller.Move(_moveVector * moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _moveVector= Vector3.zero;
         }
 
         if (controller.isGrounded)
@@ -139,6 +148,15 @@ public class FPS_Controller : MonoBehaviour
         controller.enabled = true;
 
     }
+    public Vector3 GetVelocity()
+    {
+        Vector3 baseVel = _moveVector * moveSpeed;
+        Vector3 camYawImpulse = transform.right * _lookVelocity.x * 0.01f;
+        Vector3 camPitchImpulse = mPitchController.up * (-_lookVelocity.y) * 0.01f;
+
+        return baseVel + camYawImpulse + camPitchImpulse;
+
+}
 
 
 }
