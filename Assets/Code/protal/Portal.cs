@@ -93,5 +93,5 @@ public class Portal : MonoBehaviour
 
     }
     public void setWall(GameObject newWall) { wall = newWall; } 
-    public void setOtherPortal(GameObject newOtherPortal) { otherPortal = newOtherPortal.GetComponent<Portal>(); }
+    public void setOtherPortal(GameObject newOtherPortal) { otherPortal = newOtherPortal.GetComponent<Portal>(); Debug.Log("portal received"); }
 }

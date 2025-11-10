@@ -69,20 +69,25 @@ public class PortalGun : MonoBehaviour
                 {
                     GameObject actualPortal = GameObject.FindGameObjectWithTag(tag);
                     if (actualPortal != null) { Destroy(actualPortal); Debug.Log("PortalGun: object found"); }
-                    Vector3 spawnPos= hit.point + hit.normal * offset;
+                    Vector3 spawnPos= hit.point + hit.normal * offset;//new portal pos
                     GameObject newPortal =Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
 
                     
                     newPortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
+                    
                     if (tag.Equals(tagOrange)){
-                        newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagBlue));
-                        GameObject.FindGameObjectWithTag(tagBlue).GetComponent<Portal>().setOtherPortal(newPortal);
+                        GameObject otherPortal = GameObject.FindGameObjectWithTag(tagBlue);
+                        if (otherPortal == null) { return; }//check if the other portal is active
+                        newPortal.GetComponent<Portal>().setOtherPortal(otherPortal);
+                        otherPortal.GetComponent<Portal>().setOtherPortal(newPortal);
 
                     }
-                    else if(tag.Equals(BluePortal)) 
+                    else if(tag.Equals(tagBlue)) 
                     {
-                        newPortal.GetComponent<Portal>().setOtherPortal(GameObject.FindGameObjectWithTag(tagOrange));
-                        GameObject.FindGameObjectWithTag(tagOrange).GetComponent<Portal>().setOtherPortal(newPortal);
+                        GameObject otherPortal = GameObject.FindGameObjectWithTag(tagOrange);
+                        if (otherPortal == null) { return; }//check if the other portal is active
+                        newPortal.GetComponent<Portal>().setOtherPortal(otherPortal);
+                        otherPortal.GetComponent<Portal>().setOtherPortal(newPortal);
 
                     }
 
