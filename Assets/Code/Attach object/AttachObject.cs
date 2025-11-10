@@ -12,29 +12,40 @@ public class AttachObject : MonoBehaviour
     private bool holding = false;
     private Transform originalParent;
 
+    //detect both layers
+
+    [SerializeField] private LayerMask cubeLayer;
+    [SerializeField] private LayerMask turretLayer;
+    private LayerMask combinedMask;
+
+    void Start()
+    {
+        combinedMask = cubeLayer | turretLayer;
+    }
     public void OnCatch(InputAction.CallbackContext context)
     {
-        if(context.performed || context.started){
-            Debug.Log("CatchAction Call");
-            if (!holding)
+        if (!context.performed) { return; }
+        if (!holding)
+        {
+            Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, maxCatchDistance, combinedMask))
             {
-                Ray ray = new Ray(transform.position, transform.forward);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, maxCatchDistance))
+                Debug.Log(hit.collider.gameObject.tag);
+                if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag))
                 {
-                    if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag)) {
 
-                        PickUp(hit.collider.gameObject);
+                    PickUp(hit.collider.gameObject);
 
-                    }
                 }
+            }
 
-            }
-            else if (attachObject != null)
-            {
-                Drop();
-            }
         }
+        else if (attachObject != null)
+        {
+            Drop();
+        }
+
     }
     private void PickUp(GameObject o)
     {
@@ -76,7 +87,6 @@ public class AttachObject : MonoBehaviour
             attachObject.GetComponent<Rigidbody>().isKinematic = false;
             attachObject= null;
             holding= false;
-            Debug.Log("Trying to drop something");
 
         }
 
