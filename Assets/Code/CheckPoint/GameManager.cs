@@ -24,14 +24,25 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameOverUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Retry()
     {
         Time.timeScale = 1f;
         gameOverUI.SetActive(false);
-        player.position = lastCheckpointPos;
+
+        if (lastCheckpointPos != Vector3.zero)
+        {
+            player.position = lastCheckpointPos;
+        }
+        else
+        {
+            SceneManager.LoadScene("Silvia");
+        }
     }
+
 
     public void ExitGame()
     {
