@@ -19,7 +19,7 @@ public class PortalGun : MonoBehaviour
     [SerializeField] private float maxNormalAngle = 20f;
     [SerializeField] private float maxPointDistance = 0.1f;
 
-    [SerializeField] private float offset = 0.05f;
+    [SerializeField] private float offset = 0.0001f;
     private string tagOrange = "OrangePortal";
     private string tagBlue = "BluePortal";
 
@@ -33,7 +33,7 @@ public class PortalGun : MonoBehaviour
         }
         if (OrangePortal == null || BluePortal == null)
         {
-            Debug.LogWarning("PortalGUn: portal not set, check inspector");
+            Debug.LogWarning("PortalGun: portal not set, check inspector");
         }
 
 

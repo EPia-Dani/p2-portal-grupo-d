@@ -16,6 +16,16 @@ public class Portal : MonoBehaviour
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
     }
 
+    private void OnDestroy()
+    {
+        if(wall != null)
+        {
+            Collider wallCollider = wall.GetComponent<Collider>();
+            if (wallCollider != null)
+                wallCollider.enabled = true;
+        }
+    }
+
 
     void LateUpdate()
     {
@@ -24,11 +34,13 @@ public class Portal : MonoBehaviour
             Vector3 worldPosition = playerCamera.transform.position;
             Vector3 localPosition = reflectionTransform.InverseTransformPoint(worldPosition);
             localPosition.z = -localPosition.z;
+            localPosition.x = -localPosition.x;
             otherPortal.reflectionCamera.transform.position = otherPortal.transform.TransformPoint(localPosition);
 
             Vector3 worldDirection = playerCamera.transform.forward;
             Vector3 localDirection = reflectionTransform.InverseTransformDirection(worldDirection);
             localDirection.z = -localDirection.z;
+            localDirection.x = -localDirection.x;
             otherPortal.reflectionCamera.transform.forward = otherPortal.transform.TransformDirection(localDirection);
 
             float distance = Vector3.Distance(otherPortal.reflectionCamera.transform.position, otherPortal.transform.position);

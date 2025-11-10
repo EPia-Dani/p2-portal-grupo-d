@@ -29,7 +29,7 @@ public class FPS_Controller : MonoBehaviour
 
     private bool isTeleporting = false;
     private float teleportTimer = 0f;
-    private const float teleportCooldown = 0.2f; 
+    private const float teleportCooldown = 0.02f; 
 
     void Start()
     {
@@ -42,6 +42,8 @@ public class FPS_Controller : MonoBehaviour
         _mYaw = startRot.y;
         _mPitch = mPitchController.localRotation.eulerAngles.x;
     }
+    
+
 
     void Update()
     {
@@ -136,15 +138,18 @@ public class FPS_Controller : MonoBehaviour
         //calculate position
         Vector3 localPos = portalA.InverseTransformPoint(transform.position);
         localPos.z = -localPos.z;
+        localPos.x = -localPos.x;
         Vector3 finalPos = portalB.TransformPoint(localPos);
 
         //calculate dir
         Vector3 localDir = portalA.InverseTransformDirection(transform.forward);
         localDir.z = -localDir.z;
+        localDir.x = -localDir.x;
         Vector3 finalDir = portalB.TransformDirection(localDir);
 
         //apply 
         transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
+        _mYaw = transform.eulerAngles.y;
         _velocity = Vector3.zero;
 
         controller.enabled = true;
