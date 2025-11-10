@@ -57,7 +57,7 @@
                     "id": "b37463b8-d606-40fc-87ce-7169156d2d30",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -164,10 +164,10 @@
                 {
                     "name": "",
                     "id": "6624888d-22f7-47aa-a61e-f7d3629a3f91",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "PichUp/Drop",
                     "isComposite": false,
                     "isPartOfComposite": false

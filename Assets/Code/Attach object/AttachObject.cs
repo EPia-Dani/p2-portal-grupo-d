@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AttachObject : MonoBehaviour
 {
@@ -11,26 +12,28 @@ public class AttachObject : MonoBehaviour
     private bool holding = false;
     private Transform originalParent;
 
-    public void OnCatch()
+    public void OnCatch(InputAction.CallbackContext context)
     {
-
-        if (!holding)
-        {
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxCatchDistance))
+        if(context.performed || context.started){
+            Debug.Log("CatchAction Call");
+            if (!holding)
             {
-                if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag)) {
+                Ray ray = new Ray(transform.position, transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, maxCatchDistance))
+                {
+                    if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag)) {
 
-                    PickUp(hit.collider.gameObject);
+                        PickUp(hit.collider.gameObject);
 
+                    }
                 }
-            }
 
-        }
-        else
-        {
-            Drop();
+            }
+            else if (attachObject != null)
+            {
+                Drop();
+            }
         }
     }
     private void PickUp(GameObject o)
@@ -38,10 +41,12 @@ public class AttachObject : MonoBehaviour
         Rigidbody rb = o.GetComponent<Rigidbody>();
         if(rb != null)
         {
+            Debug.Log("Trying to pick up something");
             originalParent = rb.transform.parent;
             holding = true; //save original parent
 
             //configure rb
+            attachObject = o;
             rb.linearVelocity  = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
@@ -60,11 +65,18 @@ public class AttachObject : MonoBehaviour
 
         if (holding||attachObject!=null)
         {
-
-            attachObject.transform.SetParent(originalParent, true);
+            if (originalParent != null)
+            {
+                attachObject.transform.SetParent(originalParent, true);
+            }
+            else
+            {
+                attachObject.transform.SetParent(null);
+            }
             attachObject.GetComponent<Rigidbody>().isKinematic = false;
             attachObject= null;
             holding= false;
+            Debug.Log("Trying to drop something");
 
         }
 
