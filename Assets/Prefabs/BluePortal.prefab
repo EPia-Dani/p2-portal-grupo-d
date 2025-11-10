@@ -51,8 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6a91c324635544f9ccc67185bba85f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherPortal: {fileID: 1580679659980883664, guid: 612094d5b4bbb8d44ab79ca8fd88695e,
-    type: 3}
+  otherPortal: {fileID: 0}
   reflectionCamera: {fileID: 7233534253908203119}
   reflectionTransform: {fileID: 4639117109143894998}
   effectNearPlane: 0

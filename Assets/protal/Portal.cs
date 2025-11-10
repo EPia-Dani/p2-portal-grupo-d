@@ -6,7 +6,7 @@ using UnityEngine.Analytics;
 public class Portal : MonoBehaviour
 {
     private Camera playerCamera;
-    [SerializeField] private Portal otherPortal;
+    public Portal otherPortal;
     [SerializeField] private Camera reflectionCamera;
     [SerializeField] private Transform reflectionTransform;
     public float effectNearPlane=-0.5f;
@@ -38,7 +38,7 @@ public class Portal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || otherPortal == null) return;
 
         // Disable the collider of the wall when the player enters the portal trigger
         if (wall != null)
@@ -51,7 +51,7 @@ public class Portal : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || otherPortal == null) return;
 
         if (wall != null)
         {
@@ -63,7 +63,7 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player")||otherPortal==null) return;
 
 
 
