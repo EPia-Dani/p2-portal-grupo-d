@@ -22,9 +22,13 @@ public class Turret : MonoBehaviour
     public LayerMask visionMask;
     public float fireRange = 20f;
     public bool canSeePlayer = false;
+    private bool hasPlayedDetectionSound = false;
 
-    public AudioSource fallSound;
+    [Header("Sounds")]
+    public AudioClip fallSound;         
+    public AudioClip detectSound;        
 
+    [Header("Particles")]
     public ParticleSystem sparks;
     public ParticleSystem smoke;
 
@@ -59,7 +63,7 @@ public class Turret : MonoBehaviour
             RotateToPlayer();
         }
 
-        if (!hasFallen)           
+        if (!hasFallen)
             RotateToPlayer();
 
         CheckTurretAngle();
@@ -76,17 +80,9 @@ public class Turret : MonoBehaviour
 
         if (!hasFallen && angle > m_MaxAngle)
         {
-            hasFallen = true;
-            rb.isKinematic = false;
-            m_LaserActive = false;
-            m_LineRenderer.enabled = false;
-
-            if (sparks != null && !sparks.isPlaying) sparks.Play();
-            if (smoke != null && !smoke.isPlaying) smoke.Play();
-            if (fallSound != null && !fallSound.isPlaying) fallSound.Play();
+            DisableTurret();
         }
     }
-
 
     private void UpdateLaser()
     {
@@ -164,13 +160,8 @@ public class Turret : MonoBehaviour
             collision.collider.CompareTag("RefractionCube") ||
             collision.collider.CompareTag("Turret"))
         {
-            hasFallen = true;
-            rb.isKinematic = false;
-            m_LaserActive = false;
-            m_LineRenderer.enabled = false;
+            DisableTurret();
         }
-
-        if (fallSound != null) fallSound.Play();
     }
 
     private bool HasLineOfSight()
@@ -183,9 +174,19 @@ public class Turret : MonoBehaviour
             if (hit.collider.CompareTag("Player"))
             {
                 canSeePlayer = true;
+
+                if (!hasPlayedDetectionSound && detectSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(detectSound, transform.position);
+                    hasPlayedDetectionSound = true;
+                }
+
                 return true;
             }
         }
+
+        if (hasPlayedDetectionSound && !canSeePlayer)
+            hasPlayedDetectionSound = false;
 
         canSeePlayer = false;
         return false;
@@ -202,8 +203,10 @@ public class Turret : MonoBehaviour
 
         if (sparks != null) sparks.Play();
         if (smoke != null) smoke.Play();
-        if (fallSound != null) fallSound.Play();
+        if (fallSound != null)
+            AudioSource.PlayClipAtPoint(fallSound, transform.position);
     }
 }
+
 
 

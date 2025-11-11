@@ -4,24 +4,28 @@ using UnityEngine.Events;
 public class PortalButton : MonoBehaviour
 {
     [Header("Configuration Button")]
-    public Transform buttonTop;           
-    public float pressDepth = 0.2f;        
-    public float pressSpeed = 4f;         
-    public string[] activatorTags = { "Player", "Cube" }; 
+    public Transform buttonTop;
+    public float pressDepth = 0.2f;
+    public float pressSpeed = 4f;
+    public string[] activatorTags = { "Player", "Cube" };
 
     [Header("Events")]
-    public UnityEvent onPressed;            
-    public UnityEvent onReleased;         
+    public UnityEvent onPressed;
+    public UnityEvent onReleased;
+
+    [Header("Sounds")]
+    public AudioClip pressSound;
+    public float volume = 1f;
 
     private Vector3 initialPos;
     private Vector3 pressedPos;
     private bool isPressed = false;
-    private int pressCount = 0; 
+    private int pressCount = 0;
 
     void Start()
     {
         if (buttonTop == null)
-            buttonTop = transform; 
+            buttonTop = transform;
 
         initialPos = buttonTop.localPosition;
         pressedPos = initialPos - new Vector3(0, pressDepth, 0);
@@ -29,7 +33,6 @@ public class PortalButton : MonoBehaviour
 
     void Update()
     {
-        
         Vector3 targetPos = isPressed ? pressedPos : initialPos;
         buttonTop.localPosition = Vector3.Lerp(buttonTop.localPosition, targetPos, Time.deltaTime * pressSpeed);
     }
@@ -43,6 +46,9 @@ public class PortalButton : MonoBehaviour
             {
                 isPressed = true;
                 onPressed?.Invoke();
+
+                if (pressSound != null)
+                    AudioSource.PlayClipAtPoint(pressSound, transform.position, volume);
             }
         }
     }

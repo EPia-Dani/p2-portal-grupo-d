@@ -8,7 +8,11 @@ public class DoorController : MonoBehaviour
 
     [Header("Settings")]
     public float openDistance = 0.75f;
-    public float openSpeed = 2f;     
+    public float openSpeed = 2f;
+
+    [Header("Sound")]
+    public AudioClip doorSound;
+    public float volume = 1f;
 
     private Vector3 leftClosedPos;
     private Vector3 rightClosedPos;
@@ -16,6 +20,7 @@ public class DoorController : MonoBehaviour
     private Vector3 rightOpenPos;
 
     private bool isOpen = false;
+    private bool wasOpen = false;
 
     void Start()
     {
@@ -30,13 +35,24 @@ public class DoorController : MonoBehaviour
     {
         if (leftDoor == null || rightDoor == null) return;
 
-        leftDoor.localPosition = Vector3.Lerp(leftDoor.localPosition,
+        leftDoor.localPosition = Vector3.Lerp(
+            leftDoor.localPosition,
             isOpen ? leftOpenPos : leftClosedPos,
-            Time.deltaTime * openSpeed);
+            Time.deltaTime * openSpeed
+        );
 
-        rightDoor.localPosition = Vector3.Lerp(rightDoor.localPosition,
+        rightDoor.localPosition = Vector3.Lerp(
+            rightDoor.localPosition,
             isOpen ? rightOpenPos : rightClosedPos,
-            Time.deltaTime * openSpeed);
+            Time.deltaTime * openSpeed
+        );
+
+        if (isOpen != wasOpen)
+        {
+            wasOpen = isOpen;
+            if (doorSound != null)
+                AudioSource.PlayClipAtPoint(doorSound, transform.position, volume);
+        }
     }
 
     public void OpenDoor()
@@ -49,6 +65,7 @@ public class DoorController : MonoBehaviour
         isOpen = false;
     }
 }
+
 
 
 

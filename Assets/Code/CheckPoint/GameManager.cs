@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [Header("References UI")]
+    [Header("Refs UI")]
     public GameObject canvasPrincipal;   
     public GameObject gameOverUI;         
     public GameObject checkpointUI;       

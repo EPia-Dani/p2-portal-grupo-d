@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class SlidingSurface : MonoBehaviour
 {
-    [Header("Configuration Sliding")]
+    [Header("Configuration")]
     public float slideMultiplier = 1.5f;
     public float dragWhileSliding = 0.1f; 
     public float minVelocityToSlide = 0.2f;

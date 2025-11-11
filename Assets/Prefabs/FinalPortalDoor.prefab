@@ -95,3 +95,5 @@ MonoBehaviour:
   rightDoor: {fileID: 1013735258186061585}
   openDistance: 0.5
   openSpeed: 2
+  doorSound: {fileID: 8300000, guid: 725597a6653b13745874d54a15f50fee, type: 3}
+  volume: 1

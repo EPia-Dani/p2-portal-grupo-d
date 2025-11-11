@@ -2,12 +2,12 @@
 
 public class RefractionCube : MonoBehaviour
 {
-    [Header("Referències")]
+    [Header("Refs")]
     public Transform core;          
     public LineRenderer lineRenderer;
     public LayerMask collisionMask = ~0;
 
-    [Header("Configuració")]
+    [Header("Configuration")]
     public float maxDistance = 100f;
 
     private bool createRefraction = false;

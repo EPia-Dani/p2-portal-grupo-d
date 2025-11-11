@@ -56,7 +56,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 1ca6f9bdf3f4c7c4aaa20a3466e2cf53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +100,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.57232696, g: 0.023396911, b: 0.023396911, a: 1}
+      key0: {r: 0.8113208, g: 0.5821708, b: 0.079090886, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -9955,7 +9955,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   fireRange: 20
   canSeePlayer: 0
-  fallSound: {fileID: 0}
+  fallSound: {fileID: 8300000, guid: c56a760fe4313994a811cdc69a67d791, type: 3}
+  detectSound: {fileID: 8300000, guid: 3a31e8a268dd9c942b30768c1f996dd8, type: 3}
   sparks: {fileID: 2224357924239167546}
   smoke: {fileID: 6281557149190025593}
   laserDamage: 50

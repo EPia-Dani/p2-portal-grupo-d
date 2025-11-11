@@ -167,6 +167,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  pressSound: {fileID: 8300000, guid: 34c803e610c350840b915674f5ac396f, type: 3}
+  volume: 1
 --- !u!65 &7532187908814673505
 BoxCollider:
   m_ObjectHideFlags: 0
