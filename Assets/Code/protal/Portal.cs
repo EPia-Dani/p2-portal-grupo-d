@@ -50,45 +50,71 @@ public class Portal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || otherPortal == null) return;
+        if (otherPortal == null || wall == null) return;
 
-        // Disable the collider of the wall when the player enters the portal trigger
-        if (wall != null)
+        Collider wallCollider = wall.GetComponent<Collider>();
+        Collider targetCollider = other.GetComponent<Collider>();
+
+        if (wallCollider == null || targetCollider == null) return;
+
+        if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
-            Collider wallCollider = wall.GetComponent<Collider>();
-            if (wallCollider != null)
-                wallCollider.enabled = false;
+            Physics.IgnoreCollision(wallCollider, targetCollider, true);
         }
     }
+
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player") || otherPortal == null) return;
+        if (otherPortal == null || wall == null) return;
 
-        if (wall != null)
+        Collider wallCollider = wall.GetComponent<Collider>();
+        Collider targetCollider = other.GetComponent<Collider>();
+
+        if (wallCollider == null || targetCollider == null) return;
+
+        if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
-            Collider wallCollider = wall.GetComponent<Collider>();
-            if (wallCollider != null)
-                wallCollider.enabled = true;
+            Physics.IgnoreCollision(wallCollider, targetCollider, false);
         }
     }
 
+
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("Player")||otherPortal==null) return;
+        if (otherPortal==null) return;
 
 
+        if (other.CompareTag("Player")) {
+            Transform playerTransform = other.transform;
 
-        Transform playerTransform = other.transform;
+            Plane portalPlane = new Plane(transform.forward, transform.position);
 
-        Plane portalPlane = new Plane(transform.forward, transform.position);
+            float distance = portalPlane.GetDistanceToPoint(other.transform.position);
 
-        float distance = portalPlane.GetDistanceToPoint(playerTransform.position);
 
-        if (distance < 0f)
-        {
+            if (distance < 0f)
+            {
 
-            PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);
+                PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);
+            }
+
+
+        }
+        else if (other.CompareTag("Cube"))
+        {            
+            Transform playerTransform = other.transform;
+
+            Plane portalPlane = new Plane(transform.forward, transform.position);
+
+            float distance = portalPlane.GetDistanceToPoint(other.transform.position); 
+
+
+            if (distance < 0.2f)
+            {
+                Debug.LogWarning("trying to teleport");
+                PortalEvents.RaiseCubeTeleported(this, otherPortal, other.gameObject);
+            }
         }
 
     }
