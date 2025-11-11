@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class Turret : MonoBehaviour
 {
     [Header("Laser Settings")]
@@ -15,6 +15,8 @@ public class Turret : MonoBehaviour
     public float rotationSpeed = 4f;
 
     private Rigidbody rb;
+    private AudioSource audioSource;
+
     private bool hasFallen = false;
     private bool m_LaserActive = true;
     public float detectionRange = 15f;
@@ -25,8 +27,8 @@ public class Turret : MonoBehaviour
     private bool hasPlayedDetectionSound = false;
 
     [Header("Sounds")]
-    public AudioClip fallSound;         
-    public AudioClip detectSound;        
+    public AudioClip fallSound;
+    public AudioClip detectSound;
 
     [Header("Particles")]
     public ParticleSystem sparks;
@@ -36,6 +38,15 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
+        
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.isKinematic = true;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; 
+
         if (m_LineRenderer == null)
             m_LineRenderer = GetComponentInChildren<LineRenderer>();
 
@@ -48,12 +59,10 @@ public class Turret : MonoBehaviour
         m_LineRenderer.enabled = true;
         m_LineRenderer.positionCount = 2;
 
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.isKinematic = true;
-
         if (sparks != null) sparks.Stop();
         if (smoke != null) smoke.Stop();
+
+        UpdateLaser(); 
     }
 
     private void Update()
@@ -86,6 +95,8 @@ public class Turret : MonoBehaviour
 
     private void UpdateLaser()
     {
+        if (m_LineRenderer == null) return;
+
         m_LineRenderer.enabled = true;
 
         Vector3 startPos = m_LineRenderer.transform.position;
@@ -93,13 +104,11 @@ public class Turret : MonoBehaviour
         RaycastHit hit;
         Vector3 endPos;
 
-        if (!canSeePlayer && !Physics.Raycast(new Ray(startPos, forward), m_MaxDistance, m_CollisionLayerMask))
+        if (!Physics.Raycast(new Ray(startPos, forward), out hit, m_MaxDistance, m_CollisionLayerMask))
         {
-            m_LineRenderer.enabled = false;
-            return;
+            endPos = startPos + forward * m_MaxDistance;
         }
-
-        if (Physics.Raycast(new Ray(startPos, forward), out hit, m_MaxDistance, m_CollisionLayerMask))
+        else
         {
             endPos = startPos + forward * hit.distance;
 
@@ -107,23 +116,14 @@ public class Turret : MonoBehaviour
             {
                 PlayerHealth ph = hit.collider.GetComponentInParent<PlayerHealth>();
                 if (ph != null)
-                {
                     ph.TakeDamage(ph.maxHealth);
-                }
             }
-
             else if (hit.collider.CompareTag("Turret"))
             {
                 Turret otherTurret = hit.collider.GetComponentInParent<Turret>();
                 if (otherTurret != null)
-                {
                     otherTurret.DisableTurret();
-                }
             }
-        }
-        else
-        {
-            endPos = startPos + forward * m_MaxDistance;
         }
 
         m_LineRenderer.SetPosition(0, startPos);
@@ -175,9 +175,11 @@ public class Turret : MonoBehaviour
             {
                 canSeePlayer = true;
 
+                
                 if (!hasPlayedDetectionSound && detectSound != null)
                 {
-                    AudioSource.PlayClipAtPoint(detectSound, transform.position);
+                    audioSource.clip = detectSound;
+                    audioSource.Play();
                     hasPlayedDetectionSound = true;
                 }
 
@@ -196,6 +198,13 @@ public class Turret : MonoBehaviour
     {
         if (hasFallen) return;
 
+        if (fallSound != null)
+        {
+            audioSource.Stop();
+            audioSource.clip = fallSound;
+            audioSource.Play();
+        }
+
         hasFallen = true;
         rb.isKinematic = false;
         m_LaserActive = false;
@@ -203,10 +212,6 @@ public class Turret : MonoBehaviour
 
         if (sparks != null) sparks.Play();
         if (smoke != null) smoke.Play();
-        if (fallSound != null)
-            AudioSource.PlayClipAtPoint(fallSound, transform.position);
     }
 }
-
-
 
