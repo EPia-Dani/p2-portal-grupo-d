@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KillZone : MonoBehaviour
+public class Destroying : MonoBehaviour
 {
     [Header("Configuration")]
     public CubeSpawner spawner;
