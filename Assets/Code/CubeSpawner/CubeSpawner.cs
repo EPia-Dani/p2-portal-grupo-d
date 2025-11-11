@@ -13,11 +13,11 @@ public class CubeSpawner : MonoBehaviour
     public bool alignToSpawnRotation = true;
 
     [Header("Sound")]
-    public AudioSource spawnSound;
+    public AudioClip spawnSound; 
+    public float volume = 1f;     
 
     private float lastSpawnTime = -999f;
     private readonly List<GameObject> alive = new List<GameObject>();
-
 
     public void SpawnOnce()
     {
@@ -27,11 +27,11 @@ public class CubeSpawner : MonoBehaviour
         alive.RemoveAll(go => go == null);
 
         if (alive.Count >= maxAlive) return;
+
         if (cubePrefab == null || spawnPoint == null) return;
 
         Quaternion rot = alignToSpawnRotation ? spawnPoint.rotation : Quaternion.identity;
         GameObject cube = Instantiate(cubePrefab, spawnPoint.position, rot);
-
         cube.tag = "Cube";
 
         if (!cube.TryGetComponent<Rigidbody>(out _))
@@ -47,7 +47,8 @@ public class CubeSpawner : MonoBehaviour
 
         alive.Add(cube);
 
-        if (spawnSound != null) spawnSound.Play();
+        if (spawnSound != null)
+            AudioSource.PlayClipAtPoint(spawnSound, spawnPoint.position, volume);
 
         lastSpawnTime = Time.time;
     }

@@ -3,62 +3,66 @@ using TMPro;
 
 public class Checkpoint : MonoBehaviour
 {
-    [Header("UI del mensaje")]
-    public TMP_Text mensajeUI;
-    public float duracionMensaje = 2f;
+    [Header("UI Message")]
+    public TMP_Text messageUI;
+    public float messageDuration = 2f;
 
-    private bool activado = false;
-    private bool mostrandoMensaje = false;
-    private float tiempoRestanteMensaje = 0f;
+    [Header("Sound")]
+    public AudioClip saveSound;
+    public float volume = 1f;
+
+    private bool activated = false;
+    private bool showingMessage = false;
+    private float remainingMessageTime = 0f;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!activado && other.CompareTag("Player"))
+        if (!activated && other.CompareTag("Player"))
         {
-            activado = true;
+            activated = true;
 
             if (GameManager.instance != null)
             {
                 GameManager.instance.SetCheckpoint(transform.position);
             }
 
-            MostrarMensaje();
+            ShowMessage();
+
+            if (saveSound != null)
+                AudioSource.PlayClipAtPoint(saveSound, transform.position, volume);
         }
     }
 
     private void Update()
     {
-        if (mostrandoMensaje)
+        if (showingMessage)
         {
-            tiempoRestanteMensaje -= Time.deltaTime;
+            remainingMessageTime -= Time.deltaTime;
 
-            if (tiempoRestanteMensaje <= 0f)
+            if (remainingMessageTime <= 0f)
             {
-                OcultarMensaje();
+                HideMessage();
             }
         }
     }
 
-    private void MostrarMensaje()
+    private void ShowMessage()
     {
-        if (mensajeUI != null)
+        if (messageUI != null)
         {
-            mensajeUI.text = "¡Punto de partida guardado!";
-            mensajeUI.gameObject.SetActive(true);
-            mostrandoMensaje = true;
-            tiempoRestanteMensaje = duracionMensaje;
+            messageUI.text = "Checkpoint saved!";
+            messageUI.gameObject.SetActive(true);
+            showingMessage = true;
+            remainingMessageTime = messageDuration;
         }
     }
 
-    private void OcultarMensaje()
+    private void HideMessage()
     {
-        if (mensajeUI != null)
+        if (messageUI != null)
         {
-            mensajeUI.gameObject.SetActive(false);
+            messageUI.gameObject.SetActive(false);
         }
-        mostrandoMensaje = false;
+        showingMessage = false;
     }
 }
-
-
-

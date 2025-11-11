@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class BouncingSurface : MonoBehaviour
 {
-    [Header("Configuraci� del rebot")]
+    [Header("Configuration")]
     public float bounceForce = 10f;
     public bool reflectDirection = true; 
 
