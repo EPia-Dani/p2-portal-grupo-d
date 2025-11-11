@@ -12,17 +12,24 @@ public class AttachObject : MonoBehaviour
     private bool holding = false;
     private Transform originalParent;
 
-    //detect both layers
-
-   [SerializeField] private LayerMask cubeLayer;
+    private float forceMulti = 3f;
+    
+    [SerializeField] private LayerMask cubeLayer;
     [SerializeField] private LayerMask turretLayer;
-    private LayerMask combinedMask; 
+    private LayerMask combinedMask;
+
+    [SerializeField] private Camera playerCamera;
+
+
+
 
     private FPS_Controller playerController;
 
     void Start()
     {
-            playerController = GetComponentInParent<FPS_Controller>();
+        playerController = GetComponentInParent<FPS_Controller>();
+        combinedMask = cubeLayer | turretLayer;
+        playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
 
     }
     public void OnCatch(InputAction.CallbackContext context)
@@ -30,11 +37,15 @@ public class AttachObject : MonoBehaviour
         if (!context.performed) { return; }
         if (!holding)
         {
-            Ray ray = new Ray(transform.position, transform.forward);
+            Debug.LogWarning("Action Call E");
+            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            Debug.DrawRay(ray.origin, ray.direction * maxCatchDistance, Color.red, 1f);
+
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxCatchDistance))
+            if (Physics.SphereCast(ray,0.3f, out hit, maxCatchDistance,combinedMask))
             {
                 Debug.Log(hit.collider.gameObject.tag);
+                Debug.Log("Raycast throw");
                 if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag))
                 {
 
@@ -77,7 +88,19 @@ public class AttachObject : MonoBehaviour
     private void Drop()
     {
 
-        if (holding||attachObject!=null)
+        HandleCubeExpulsion(false);
+
+    }
+
+    public void Throw(InputAction.CallbackContext context)
+    {
+        HandleCubeExpulsion(true);
+
+    }
+    private void HandleCubeExpulsion(bool throwObject)
+    {
+        
+        if (holding || attachObject != null)
         {
             if (originalParent != null)
             {
@@ -91,18 +114,23 @@ public class AttachObject : MonoBehaviour
             rb.isKinematic = false;
 
             Vector3 playerVelocity = Vector3.zero;
-            
+
             if (playerController != null)
             {
                 playerVelocity = playerController.GetVelocity();
                 rb.linearVelocity = playerVelocity;
+                if (throwObject)
+                {
+                    rb.AddForce(playerController.transform.forward*forceMulti, ForceMode.Impulse);
+                }
             }
 
-            attachObject= null;
+            attachObject = null;
             holding = false;
-            
+
 
         }
 
     }
+
 }
