@@ -12,8 +12,8 @@ public class FPS_Controller : MonoBehaviour
     [SerializeField] private float lookSensitivity = 1.5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private bool invertPitch = false;
-    [SerializeField, Range(-80f, 80f)] private float maxPitch = 80f;
-    [SerializeField, Range(-80f, 80f)] private float minPitch = -80f;
+    [SerializeField, Range(-90f, 90f)] private float maxPitch = 90f;
+    [SerializeField, Range(-90f, 90f)] private float minPitch = -90f;
     [SerializeField] private Transform mPitchController;
 
     public CharacterController controller;
@@ -139,9 +139,18 @@ public class FPS_Controller : MonoBehaviour
         localDir.x = -localDir.x;
         Vector3 finalDir = portalB.TransformDirection(localDir);
 
-        //apply 
-        transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
-        _mYaw = transform.eulerAngles.y;
+        Quaternion camRot = toPortal.reflectionCamera.transform.rotation;
+
+        Quaternion bodyYaw = Quaternion.Euler(0f, camRot.eulerAngles.y, 0f);
+        transform.SetPositionAndRotation(finalPos, bodyYaw);
+
+        float camPitch = NormalizeAngle(camRot.eulerAngles.x);
+        mPitchController.localRotation = Quaternion.Euler(camPitch, 0f, 0f);
+
+        // Actualizar valores internos del controlador de cámara
+        _mYaw = NormalizeAngle(transform.eulerAngles.y);
+        _mPitch = NormalizeAngle(mPitchController.localEulerAngles.x);
+
         //_velocity = Vector3.zero;
 
         controller.enabled = true;
@@ -156,6 +165,13 @@ public class FPS_Controller : MonoBehaviour
         return baseVel + camYawImpulse + camPitchImpulse;
 
 }
+    private float NormalizeAngle(float angle)
+    {
+        angle %= 360f;
+        if (angle > 180f) angle -= 360f;
+        return angle;
+    }
+
 
 
 }

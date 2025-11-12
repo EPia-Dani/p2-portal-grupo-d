@@ -8,7 +8,7 @@ public class Portal : MonoBehaviour
 {
     private Camera playerCamera;
     public Portal otherPortal;
-    [SerializeField] private Camera reflectionCamera;
+    [SerializeField] public Camera reflectionCamera;
     [SerializeField] private Transform reflectionTransform;
     public float effectNearPlane=-0.5f;
     public GameObject wall;

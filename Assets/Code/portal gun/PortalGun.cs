@@ -65,8 +65,13 @@ public class PortalGun : MonoBehaviour
                 if (isValid)
                 {
                     GameObject actualPortal = GameObject.FindGameObjectWithTag(tag);
-                    if (actualPortal != null) { 
-                        Destroy(actualPortal);
+                    if (actualPortal != null) {
+
+                            Debug.Log("Destroyed");
+                            actualPortal.SetActive(false); //protect from spams
+                            Destroy(actualPortal);
+                        
+
                     }
                     Vector3 spawnPos= hit.point + hit.normal * offset;//new portal pos
                     GameObject newPortal =Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
