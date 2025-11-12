@@ -129,6 +129,7 @@ public class FPS_Controller : MonoBehaviour
 
         //calculate position
         Vector3 localPos = portalA.InverseTransformPoint(transform.position);
+        localPos.z -= 0.16f;
         localPos.z = -localPos.z;
         localPos.x = -localPos.x;
         Vector3 finalPos = portalB.TransformPoint(localPos);

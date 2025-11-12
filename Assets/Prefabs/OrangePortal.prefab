@@ -151,7 +151,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 4.8924346
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -298,8 +298,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0943146, y: 0.21491933, z: 0.072244644}
-  m_Center: {x: -0.07938528, y: -1.3503646, z: -0.08963871}
+  m_Size: {x: 2.0943146, y: 0.13297427, z: 0.072244644}
+  m_Center: {x: -0.07938528, y: -1.3913372, z: -0.08963871}
 --- !u!65 &394848278485307407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -319,8 +319,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.34176254, y: 2.394697, z: 0.06444073}
-  m_Center: {x: -0.9556613, y: -0.11110723, z: -0.08100748}
+  m_Size: {x: 0.14257812, y: 2.394697, z: 0.06444073}
+  m_Center: {x: -1.0552535, y: -0.11110723, z: -0.08100748}
 --- !u!65 &7958154086393286794
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -340,8 +340,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4075327, y: 2.4029174, z: 0.11724186}
-  m_Center: {x: 0.9591589, y: -0.10699701, z: -0.11213732}
+  m_Size: {x: 0.18691158, y: 2.4029174, z: 0.11724186}
+  m_Center: {x: 1.0694695, y: -0.10699701, z: -0.11213732}
 --- !u!65 &7503337904835140082
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -361,8 +361,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0943146, y: 0.47067976, z: 0.054696083}
-  m_Center: {x: -0.07938528, y: 1.3177993, z: -0.10969114}
+  m_Size: {x: 2.0943146, y: 0.27068496, z: 0.054696083}
+  m_Center: {x: -0.07938528, y: 1.4682244, z: -0.10969114}
 --- !u!65 &697204993648031296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -382,5 +382,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.689657, y: 2.4649734, z: 1.746912}
-  m_Center: {x: -0.011791348, y: -0.022185326, z: 0.75247574}
+  m_Size: {x: 1.5538077, y: 2.3447993, z: 1.746912}
+  m_Center: {x: -0.011791468, y: -0.08227241, z: 0.75247574}

@@ -96,7 +96,7 @@ public class Portal : MonoBehaviour
             float distance = portalPlane.GetDistanceToPoint(other.transform.position);
 
 
-            if (distance < 0f)
+            if (distance <= 0.1f)
             {
 
                 PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);

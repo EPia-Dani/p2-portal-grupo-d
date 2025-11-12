@@ -75,8 +75,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0943146, y: 0.21491933, z: 0.10428972}
-  m_Center: {x: -0.07938528, y: -1.3503646, z: -0.10566117}
+  m_Size: {x: 2.0943146, y: 0.23028624, z: 0.10428972}
+  m_Center: {x: -0.07938528, y: -1.496351, z: -0.10566117}
 --- !u!65 &7679334376090958548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -96,8 +96,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.34176245, y: 2.394697, z: 0.08229508}
-  m_Center: {x: -0.9556613, y: -0.11110723, z: -0.089934535}
+  m_Size: {x: 0.34688458, y: 2.394697, z: 0.08229508}
+  m_Center: {x: -1.1426263, y: -0.11110723, z: -0.089934535}
 --- !u!65 &7713043098960144506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -117,8 +117,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4075326, y: 2.4029174, z: 0.1636713}
-  m_Center: {x: 0.9591589, y: -0.10699701, z: -0.13535197}
+  m_Size: {x: 0.3716766, y: 2.4029174, z: 0.1636713}
+  m_Center: {x: 1.1922249, y: -0.10699701, z: -0.13535197}
 --- !u!65 &4280791154653376316
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -138,8 +138,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0943146, y: 0.47067976, z: 0.05264375}
-  m_Center: {x: -0.07938528, y: 1.3177993, z: -0.13157952}
+  m_Size: {x: 2.0943146, y: 0.13260567, z: 0.052643765}
+  m_Center: {x: -0.07938528, y: 1.4868364, z: -0.13157952}
 --- !u!65 &6364136226789628069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -159,8 +159,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.689657, y: 2.4649734, z: 1.7928528}
-  m_Center: {x: -0.011791348, y: -0.022185326, z: 0.72950536}
+  m_Size: {x: 1.5569807, y: 2.3417735, z: 1.7928528}
+  m_Center: {x: -0.0117916465, y: -0.083785295, z: 0.72950536}
 --- !u!1 &4336331585322787517
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 7.8054137
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
