@@ -42,6 +42,7 @@ public class CubeTeleportCode : MonoBehaviour
         localVelocity.x = -localVelocity.x;
 
         transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
+        transform.localScale = Vector3.one * toPortal.getScale();
 
         Vector3 finalVelocity = portalB.TransformDirection(localVelocity); //correct the velocity
         rb.linearVelocity = finalVelocity;

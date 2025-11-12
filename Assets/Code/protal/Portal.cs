@@ -10,7 +10,9 @@ public class Portal : MonoBehaviour
     public Portal otherPortal;
     [SerializeField] public Camera reflectionCamera;
     [SerializeField] private Transform reflectionTransform;
-    public float effectNearPlane=-0.5f;
+    public float effectNearPlane = -0.5f;
+    
+    private float scale = 1f;
     public GameObject wall;
     private List<Collider> ignoredColliders = new List<Collider>();
 
@@ -124,8 +126,17 @@ public class Portal : MonoBehaviour
         }
 
     }
-    public void setWall(GameObject newWall) { wall = newWall; } 
-    public void setOtherPortal(GameObject newOtherPortal) { 
+    public void setWall(GameObject newWall) { wall = newWall; }
+    public void setOtherPortal(GameObject newOtherPortal)
+    {
         otherPortal = newOtherPortal.GetComponent<Portal>();
+    }
+    public void setScale(float s)
+    {
+        scale = s;
+    }
+    public float getScale()
+    {
+        return scale;
     }
 }

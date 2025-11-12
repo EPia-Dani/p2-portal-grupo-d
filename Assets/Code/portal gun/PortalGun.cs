@@ -207,6 +207,7 @@ public class PortalGun : MonoBehaviour
                         if (otherPortal == null) { return; }//check if the other portal is active
                         newPortal.GetComponent<Portal>().setOtherPortal(otherPortal);
                         otherPortal.GetComponent<Portal>().setOtherPortal(newPortal);
+                        newPortal.GetComponent<Portal>().setScale(scale);
 
                     }
 
