@@ -75,13 +75,13 @@ public class GameManager : MonoBehaviour
         if (lastCheckpointPos != Vector3.zero)
             player.position = lastCheckpointPos;
         else
-            SceneManager.LoadScene("Silvia");
+            SceneManager.LoadScene("GameplayScene");
     }
 
     public void ExitGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Silvia");
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }
 
