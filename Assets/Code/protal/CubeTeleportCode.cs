@@ -2,19 +2,13 @@ using UnityEngine;
 
 public class CubeTeleportCode : MonoBehaviour
 {
-    private Rigidbody rigidbody;
-
-    private void Start()
-    {
-        rigidbody = GetComponent<Rigidbody>();
-    }
 
     void OnEnable()
     {
         PortalEvents.OnCubeTeleported += HandleTeleportEvent;
 
     }
-    void OndDisable()
+    void OnDisable()
     {
         PortalEvents.OnCubeTeleported -= HandleTeleportEvent;
 
@@ -22,6 +16,12 @@ public class CubeTeleportCode : MonoBehaviour
     }
     public void HandleTeleportEvent(Portal fromPortal, Portal toPortal, GameObject Object)
     {
+        
+        if(Object.GetComponent<Collider>()!=this.GetComponent<Collider>()) return;
+
+        Rigidbody rb = this.GetComponent<Rigidbody>();
+        
+        if (rb.isKinematic) return;
 
         Transform portalA = fromPortal.transform;
         Transform portalB = toPortal.transform;
@@ -36,9 +36,15 @@ public class CubeTeleportCode : MonoBehaviour
         localDir.x = -localDir.x;
         Vector3 finalDir = portalB.TransformDirection(localDir);
 
+        //to maintain the momentum of the cube;
+        Vector3 localVelocity = portalA.InverseTransformDirection(rb.linearVelocity);
+        localVelocity.z = -localVelocity.z;
+        localVelocity.x = -localVelocity.x;
+
         transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
 
-
+        Vector3 finalVelocity = portalB.TransformDirection(localVelocity); //correct the velocity
+        rb.linearVelocity = finalVelocity;
 
     }
 }

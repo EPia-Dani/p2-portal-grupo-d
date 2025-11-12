@@ -24,7 +24,6 @@ public class FPS_Controller : MonoBehaviour
     private Vector2 _inputLook;
     private Vector3 _velocity;
     private Vector3 _moveVector;
-    private Vector3 _targetTeleport;
 
 
     private Vector2 _prevLookInput;
@@ -143,7 +142,7 @@ public class FPS_Controller : MonoBehaviour
         //apply 
         transform.SetPositionAndRotation(finalPos, Quaternion.LookRotation(finalDir, Vector3.up));
         _mYaw = transform.eulerAngles.y;
-        _velocity = Vector3.zero;
+        //_velocity = Vector3.zero;
 
         controller.enabled = true;
 

@@ -37,15 +37,15 @@ public class AttachObject : MonoBehaviour
         if (!context.performed) { return; }
         if (!holding)
         {
-            Debug.LogWarning("Action Call E");
+            //Debug.LogWarning("Action Call E");
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             Debug.DrawRay(ray.origin, ray.direction * maxCatchDistance, Color.red, 1f);
 
             RaycastHit hit;
             if (Physics.SphereCast(ray,0.3f, out hit, maxCatchDistance,combinedMask))
             {
-                Debug.Log(hit.collider.gameObject.tag);
-                Debug.Log("Raycast throw");
+                //Debug.Log(hit.collider.gameObject.tag);
+                //Debug.Log("Raycast throw");
                 if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag))
                 {
 
@@ -66,7 +66,7 @@ public class AttachObject : MonoBehaviour
         Rigidbody rb = o.GetComponent<Rigidbody>();
         if(rb != null)
         {
-            Debug.Log("Trying to pick up something");
+            Debug.Log("picking up something");
             originalParent = rb.transform.parent;
             holding = true; //save original parent
 

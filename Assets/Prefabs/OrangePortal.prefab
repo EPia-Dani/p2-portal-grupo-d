@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3647659783776380138}
   m_Layer: 0
   m_Name: OrangeCamera
-  m_TagString: Untagged
+  m_TagString: OrangePortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -361,8 +361,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0943146, y: 0.47067976, z: 0.0835228}
-  m_Center: {x: -0.07938528, y: 1.3177993, z: -0.095277786}
+  m_Size: {x: 2.0943146, y: 0.47067976, z: 0.054696083}
+  m_Center: {x: -0.07938528, y: 1.3177993, z: -0.10969114}
 --- !u!65 &697204993648031296
 BoxCollider:
   m_ObjectHideFlags: 0

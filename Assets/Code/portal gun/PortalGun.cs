@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class PortalGun : MonoBehaviour
 {
-
-
-
     [SerializeField]
     public GameObject OrangePortal;
     [SerializeField]
@@ -68,7 +65,9 @@ public class PortalGun : MonoBehaviour
                 if (isValid)
                 {
                     GameObject actualPortal = GameObject.FindGameObjectWithTag(tag);
-                    if (actualPortal != null) { Destroy(actualPortal); Debug.Log("PortalGun: object found"); }
+                    if (actualPortal != null) { 
+                        Destroy(actualPortal);
+                    }
                     Vector3 spawnPos= hit.point + hit.normal * offset;//new portal pos
                     GameObject newPortal =Instantiate(portal, spawnPos, Quaternion.LookRotation(hit.normal));
 
@@ -76,15 +75,16 @@ public class PortalGun : MonoBehaviour
                     newPortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                     
                     if (tag.Equals(tagOrange)){
-                        GameObject otherPortal = GameObject.FindGameObjectWithTag(tagBlue);
+                        GameObject otherPortal = GameObject.FindGameObjectWithTag(tagBlue); 
+                        PortalEvents.RaiseOrangePortalActivated();
                         if (otherPortal == null) { return; }//check if the other portal is active
                         newPortal.GetComponent<Portal>().setOtherPortal(otherPortal);
                         otherPortal.GetComponent<Portal>().setOtherPortal(newPortal);
-
                     }
                     else if(tag.Equals(tagBlue)) 
                     {
                         GameObject otherPortal = GameObject.FindGameObjectWithTag(tagOrange);
+                        PortalEvents.RaiseBluePortalActivated();
                         if (otherPortal == null) { return; }//check if the other portal is active
                         newPortal.GetComponent<Portal>().setOtherPortal(otherPortal);
                         otherPortal.GetComponent<Portal>().setOtherPortal(newPortal);

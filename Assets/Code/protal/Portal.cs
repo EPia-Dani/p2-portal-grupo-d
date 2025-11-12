@@ -1,4 +1,5 @@
 using NUnit.Framework.Constraints;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -11,6 +12,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private Transform reflectionTransform;
     public float effectNearPlane=-0.5f;
     public GameObject wall;
+    private List<Collider> ignoredColliders = new List<Collider>();
 
     void Start(){
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
@@ -18,11 +20,10 @@ public class Portal : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(wall != null)
+        foreach (Collider collider in ignoredColliders)
         {
-            Collider wallCollider = wall.GetComponent<Collider>();
-            if (wallCollider != null)
-                wallCollider.enabled = true;
+            Physics.IgnoreCollision(wall.GetComponent<Collider>(), collider, false);
+
         }
     }
 
@@ -60,6 +61,7 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
             Physics.IgnoreCollision(wallCollider, targetCollider, true);
+            ignoredColliders.Add(targetCollider);
         }
     }
 
@@ -76,6 +78,7 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
             Physics.IgnoreCollision(wallCollider, targetCollider, false);
+            ignoredColliders.Remove(targetCollider);
         }
     }
 
@@ -97,6 +100,8 @@ public class Portal : MonoBehaviour
             {
 
                 PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);
+                Physics.IgnoreCollision(wall.GetComponent<Collider>(), other, false);
+                ignoredColliders.Remove(other);
             }
 
 
@@ -110,14 +115,17 @@ public class Portal : MonoBehaviour
             float distance = portalPlane.GetDistanceToPoint(other.transform.position); 
 
 
-            if (distance < 0.2f)
+            if (distance < 0f)
             {
-                Debug.LogWarning("trying to teleport");
                 PortalEvents.RaiseCubeTeleported(this, otherPortal, other.gameObject);
+                Physics.IgnoreCollision(wall.GetComponent<Collider>(), other, false);
+                ignoredColliders.Remove(other);
             }
         }
 
     }
     public void setWall(GameObject newWall) { wall = newWall; } 
-    public void setOtherPortal(GameObject newOtherPortal) { otherPortal = newOtherPortal.GetComponent<Portal>(); Debug.Log("portal received"); }
+    public void setOtherPortal(GameObject newOtherPortal) { 
+        otherPortal = newOtherPortal.GetComponent<Portal>();
+    }
 }
