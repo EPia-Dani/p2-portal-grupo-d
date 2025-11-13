@@ -14,10 +14,21 @@ public class Portal : MonoBehaviour
     
     private float scale = 1f;
     public GameObject wall;
-    private List<Collider> ignoredColliders = new List<Collider>();
-
+    protected List<Collider> ignoredColliders = new List<Collider>();
+    bool otherPortalCollisionsEnabled;
     void Start(){
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
+    }
+
+    void OnEnable()
+    {
+        PortalEvents.OnPortalTriggered += OnOtherPortalTriggered;
+        PortalEvents.OnPortalUntriggered += OnOtherPortalUntriggered;
+    }
+    void OnDisable()
+    {
+        PortalEvents.OnPortalTriggered -= OnOtherPortalTriggered;
+        PortalEvents.OnPortalUntriggered -= OnOtherPortalUntriggered;
     }
 
     private void OnDestroy()
@@ -55,14 +66,17 @@ public class Portal : MonoBehaviour
     {
         if (otherPortal == null || wall == null) return;
 
-        Collider wallCollider = wall.GetComponent<Collider>();
-        Collider targetCollider = other.GetComponent<Collider>();
 
-        if (wallCollider == null || targetCollider == null) return;
 
         if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
+            Collider wallCollider = wall.GetComponent<Collider>();
+            Collider targetCollider = other.GetComponent<Collider>(); 
+            if (wallCollider == null || targetCollider == null) return;
+
             Physics.IgnoreCollision(wallCollider, targetCollider, true);
+            //PortalEvents.RaisePortalTriggered(this, other);
+            //otherPortal.OnOtherPortalTriggered(this,other);
             ignoredColliders.Add(targetCollider);
         }
     }
@@ -72,18 +86,20 @@ public class Portal : MonoBehaviour
     {
         if (otherPortal == null || wall == null) return;
 
-        Collider wallCollider = wall.GetComponent<Collider>();
-        Collider targetCollider = other.GetComponent<Collider>();
 
-        if (wallCollider == null || targetCollider == null) return;
 
         if (other.CompareTag("Player") || other.CompareTag("Cube"))
         {
+            Collider wallCollider = wall.GetComponent<Collider>();
+            Collider targetCollider = other.GetComponent<Collider>();
+            if (wallCollider == null || targetCollider == null) return;
+
             Physics.IgnoreCollision(wallCollider, targetCollider, false);
+            //PortalEvents.RaisePortalUntriggered(this, other);
+            //otherPortal.OnOtherPortalUntriggered(this,other);
             ignoredColliders.Remove(targetCollider);
         }
     }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -98,7 +114,7 @@ public class Portal : MonoBehaviour
             float distance = portalPlane.GetDistanceToPoint(other.transform.position);
 
 
-            if (distance <= 0.1f)
+            if (distance <= 0.0f)
             {
 
                 PortalEvents.RaisePlayerTeleported(this, otherPortal, other.gameObject);
@@ -126,6 +142,27 @@ public class Portal : MonoBehaviour
         }
 
     }
+
+    public void OnOtherPortalTriggered(Portal portal, Collider other)
+    {
+        //if (portal != this) return;
+        otherPortalCollisionsEnabled = true;
+        if (otherPortalCollisionsEnabled) { 
+                OnTriggerEnter(other);
+        otherPortalCollisionsEnabled = false;
+    }
+    }
+    
+    public void OnOtherPortalUntriggered(Portal portal, Collider other)
+    {
+        //if (portal != this) return;
+        otherPortalCollisionsEnabled = true;
+        if (otherPortalCollisionsEnabled)
+        {
+            OnTriggerExit(other);
+            otherPortalCollisionsEnabled = false;
+        }
+        }
     public void setWall(GameObject newWall) { wall = newWall; }
     public void setOtherPortal(GameObject newOtherPortal)
     {

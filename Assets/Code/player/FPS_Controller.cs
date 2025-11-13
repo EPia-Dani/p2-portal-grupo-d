@@ -41,8 +41,15 @@ public class FPS_Controller : MonoBehaviour
         _mYaw = startRot.y;
         _mPitch = mPitchController.localRotation.eulerAngles.x;
     }
-    
+    void OnEnable()
+    {
+        PortalEvents.OnPlayerTeleported += HandleTeleportEvent;
+    }
 
+    void OnDisable()
+    {
+        PortalEvents.OnPlayerTeleported -= HandleTeleportEvent;
+    }
 
     void Update()
     {
@@ -110,15 +117,7 @@ public class FPS_Controller : MonoBehaviour
             _velocity.y = jumpForce;
         }
     }
-    void OnEnable()
-    {
-        PortalEvents.OnPlayerTeleported += HandleTeleportEvent;
-    }
 
-    void OnDisable()
-    {
-        PortalEvents.OnPlayerTeleported -= HandleTeleportEvent;
-    }
     private void HandleTeleportEvent(Portal fromPortal, Portal toPortal, GameObject player)
     {
         
@@ -129,7 +128,7 @@ public class FPS_Controller : MonoBehaviour
 
         //calculate position
         Vector3 localPos = portalA.InverseTransformPoint(transform.position);
-        localPos.z -= 0.16f;
+        //localPos.z -= 0.03f;
         localPos.z = -localPos.z;
         localPos.x = -localPos.x;
         Vector3 finalPos = portalB.TransformPoint(localPos);

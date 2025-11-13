@@ -179,7 +179,6 @@ public class PortalGun : MonoBehaviour
                     if (actualPortal != null)
                     {
 
-                        Debug.Log("Destroyed");
                         actualPortal.SetActive(false); //protect from spams
                         Destroy(actualPortal);
 

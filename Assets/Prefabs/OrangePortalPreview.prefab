@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrangePortalPreview
       objectReference: {fileID: 0}
+    - target: {fileID: 8389191683197657785, guid: 612094d5b4bbb8d44ab79ca8fd88695e,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fa210f085c5cdbc468b3efb50b0c2df7, type: 2}
     m_RemovedComponents:
     - {fileID: 1580679659980883664, guid: 612094d5b4bbb8d44ab79ca8fd88695e, type: 3}
     - {fileID: 3112786250372597830, guid: 612094d5b4bbb8d44ab79ca8fd88695e, type: 3}
