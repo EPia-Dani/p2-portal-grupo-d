@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 3226504899876060653, guid: 0953d67aabeaa804eb95ef76c7f5a8a7,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5246868977911469838, guid: 0953d67aabeaa804eb95ef76c7f5a8a7,
         type: 3}
       propertyPath: m_LocalPosition.x

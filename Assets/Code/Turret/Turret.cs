@@ -41,7 +41,7 @@ public class Turret : MonoBehaviour
         
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
-        rb.isKinematic = true;
+        rb.isKinematic = false;
 
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;

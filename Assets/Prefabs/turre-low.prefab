@@ -9968,7 +9968,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxAngle: 30
-  player: {fileID: 0}
+  player: {fileID: 6460784896127851524, guid: 7e4bdabc6af88014196841c4e7f31ba8, type: 3}
   rotationSpeed: 4
   detectionRange: 5
   visionMask:
