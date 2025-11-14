@@ -3,18 +3,18 @@
 public class RefractionCube : MonoBehaviour
 {
     [Header("Refs")]
-    public Transform core;          
+    public Transform core;
     public LineRenderer lineRenderer;
-    public LayerMask collisionMask = ~0;
+    public LayerMask collisionMask = 3;
 
     [Header("Configuration")]
     public float maxDistance = 100f;
 
     private bool createRefraction = false;
+    private int lastFrameProcessed = -1;  
 
     void Update()
     {
-
         if (lineRenderer != null)
             lineRenderer.enabled = createRefraction;
 
@@ -24,7 +24,13 @@ public class RefractionCube : MonoBehaviour
     public void CreateRefraction(RaycastHit hitInfo)
     {
 
+        if (lastFrameProcessed == Time.frameCount)
+            return;
+
+        lastFrameProcessed = Time.frameCount;
+
         createRefraction = true;
+
         Vector3 startPos = core.position;
         Vector3 dir = core.forward;
 

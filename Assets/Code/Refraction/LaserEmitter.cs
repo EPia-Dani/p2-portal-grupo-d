@@ -3,7 +3,7 @@ using UnityEngine;
 public class LaserEmitter : MonoBehaviour
 {
     public float maxDistance = 100f;
-    public LayerMask collisionMask = ~0;
+    public LayerMask collisionMask = 3;
     public LineRenderer lineRenderer;
 
     void Update()
