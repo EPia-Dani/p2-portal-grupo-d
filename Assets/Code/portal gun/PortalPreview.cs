@@ -103,7 +103,10 @@ public class PortalPreview
 
     private bool IsValidSpawn(GameObject previewInstance)
     {
+        Camera cam = playerCamera;
         Transform[] validPoints = previewInstance.GetComponentsInChildren<Transform>();
+
+        Collider firstHitCollider = null; 
 
         foreach (Transform point in validPoints)
         {
@@ -111,37 +114,25 @@ public class PortalPreview
                 continue;
 
             Vector3 pointPos = point.position;
-            Vector3 direction = (pointPos - playerCamera.transform.position).normalized;
+            Vector3 direction = (pointPos - cam.transform.position).normalized;
 
-            if (Physics.Raycast(playerCamera.transform.position, direction, out RaycastHit hit, maxShootDistance))
-            {
-                float distancia = Vector3.Distance(hit.point, pointPos);
-                if (distancia > maxPointDistance)
-                {
-                    Debug.DrawLine(hit.point, pointPos, Color.red, 1f);
+            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, maxShootDistance))
+            { 
+                if (!hit.collider.CompareTag("validWall")){
                     return false;
                 }
-
-                float angle = Vector3.Angle(hit.normal, -previewInstance.transform.forward);
-                if (angle > maxNormalAngle)
+                if (firstHitCollider == null)
                 {
-                    Debug.DrawRay(hit.point, hit.normal * 0.3f, Color.yellow, 1f);
+                    firstHitCollider = hit.collider; 
+                }
+                else if (hit.collider != firstHitCollider)
+                {
                     return false;
                 }
-
-                if (!hit.collider.CompareTag("validWall"))
-                {
-                    Debug.DrawRay(hit.point, hit.normal * 0.3f, Color.magenta, 1f);
-                    return false;
-                }
-
-                Debug.DrawLine(playerCamera.transform.position, pointPos, Color.green, 0.3f);
             }
-            else
-            {
-                Debug.DrawLine(playerCamera.transform.position, pointPos, Color.red, 1f);
+            else{
                 return false;
-            }
+                    }
         }
         return true;
     }

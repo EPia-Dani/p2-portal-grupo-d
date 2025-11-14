@@ -16,7 +16,7 @@ public class PortalShooter
     public void HandleShoot(Camera cam, GameObject portalPrefab, string tag, float scale)
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxShootDistance))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (!hit.collider.CompareTag("validWall")) return;
 
@@ -78,11 +78,11 @@ public class PortalShooter
         }
     }
 
-    private bool IsValidSpawn(GameObject previewInstance, Camera cam)
+    private bool IsValidSpawn(GameObject previewInstance,Camera cam)
     {
         Transform[] validPoints = previewInstance.GetComponentsInChildren<Transform>();
-        const float maxNormalAngle = 20f;
-        const float maxPointDistance = 0.1f;
+
+        Collider firstHitCollider = null; 
 
         foreach (Transform point in validPoints)
         {
@@ -94,19 +94,23 @@ public class PortalShooter
 
             if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, maxShootDistance))
             {
-                float distancia = Vector3.Distance(hit.point, pointPos);
-                if (distancia > maxPointDistance)
+ 
+ 
+                if (!hit.collider.CompareTag("validWall")){
                     return false;
-
-                float angle = Vector3.Angle(hit.normal, -previewInstance.transform.forward);
-                if (angle > maxNormalAngle)
+                }
+                if (firstHitCollider == null)
+                {
+                    firstHitCollider = hit.collider; 
+                }
+                else if (hit.collider != firstHitCollider)
+                {
                     return false;
-
-                if (!hit.collider.CompareTag("validWall"))
-                    return false;
+                }
             }
-            else
+            else{
                 return false;
+                    }
         }
         return true;
     }
