@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Time.timeScale = 1f;
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 }
 
