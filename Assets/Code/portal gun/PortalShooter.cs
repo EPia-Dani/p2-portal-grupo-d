@@ -45,7 +45,7 @@ public class PortalShooter
             {
                 Debug.Log("trying to teleport");
                 Debug.Log(bluePortal.transform.position + "  " +  bluePortal.gameObject);
-                bluePortal.transform.position = hit.point;
+                bluePortal.transform.position = hit.point+hit.normal*offset;
                 bluePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
                 bluePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                 bluePortal.GetComponent<Portal>().setScale(scale);
@@ -59,7 +59,7 @@ public class PortalShooter
             }
             else
             {
-                orangePortal.transform.position = hit.point;
+                orangePortal.transform.position = hit.point+hit.normal*offset;
                 orangePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
                 orangePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                 PortalEvents.RaiseBluePortalActivated();
