@@ -26,10 +26,9 @@ public class PortalGun : MonoBehaviour
         if (playerCamera == null)
             Debug.LogWarning("PortalGun: camera not set");
 
-        previewHandler = new PortalPreview(playerCamera, maxShootDistance, offset);
+        previewHandler = new PortalPreview(playerCamera, maxShootDistance, offset,bluePortalPreview,orangePortalPreview);
         shooterHandler = new PortalShooter(maxShootDistance, offset, previewPortal,bluePortal,orangePortal);
 
-        previewHandler.SetPreviewPrefabs(bluePortalPreview, orangePortalPreview);
     }
 
     private void Update()

@@ -16,19 +16,35 @@ public class Portal : MonoBehaviour
     public GameObject wall;
     protected List<Collider> ignoredColliders = new List<Collider>();
     bool otherPortalCollisionsEnabled;
+
+    private bool isEnabled = false;
+
     void Start(){
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
+        reflectionCamera.gameObject.SetActive(false);
+        Collider wallCollider = wall != null ? wall.GetComponent<Collider>() : null;
+        if (wallCollider != null)
+        {
+            foreach (var col in ignoredColliders)
+                Physics.IgnoreCollision(wallCollider, col, false);
+            ignoredColliders.Clear();
+        }
+
     }
 
     void OnEnable()
     {
         PortalEvents.OnPortalTriggered += OnOtherPortalTriggered;
         PortalEvents.OnPortalUntriggered += OnOtherPortalUntriggered;
+        PortalEvents.OnPortalActivated += HandlePortalActivated;
+
     }
     void OnDisable()
     {
         PortalEvents.OnPortalTriggered -= OnOtherPortalTriggered;
         PortalEvents.OnPortalUntriggered -= OnOtherPortalUntriggered;
+        PortalEvents.OnPortalActivated -= HandlePortalActivated;
+
     }
 
     private void OnDestroy()
@@ -43,6 +59,8 @@ public class Portal : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!isEnabled) return;
+
         if (otherPortal != null && wall != null)
         {
             Vector3 worldPosition = playerCamera.transform.position;
@@ -66,6 +84,8 @@ public class Portal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!isEnabled) return;
+
         if (otherPortal == null || wall == null) return;
 
 
@@ -86,6 +106,8 @@ public class Portal : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        if (!isEnabled) return;
+
         if (otherPortal == null || wall == null) return;
 
 
@@ -105,6 +127,8 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (!isEnabled) return;
+
         if (otherPortal==null) return;
 
 
@@ -165,6 +189,16 @@ public class Portal : MonoBehaviour
             otherPortalCollisionsEnabled = false;
         }
         }
+
+
+    private void HandlePortalActivated()
+    {
+        isEnabled = true;
+        if (reflectionCamera != null)
+            reflectionCamera.gameObject.SetActive(true);
+
+        Debug.LogWarning("active event");
+    }
     public void setWall(GameObject newWall) { wall = newWall; }
     public void setOtherPortal(GameObject newOtherPortal)
     {

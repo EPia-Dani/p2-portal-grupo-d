@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 
 public class PortalPreview
@@ -8,88 +9,104 @@ public class PortalPreview
     private readonly float maxShootDistance;
     private readonly float offset;
 
-    private GameObject bluePreviewPrefab;
-    private GameObject orangePreviewPrefab;
-    private GameObject currentPreview;
+    private GameObject bluePreviw;
+    private GameObject orangePreview;
+    private GameObject currentPreviw;
+
+    //private GameObject currentPreview;
 
     private bool showingPreview = false;
-    private string currentTag;
     private float currentScale = 1f;
     private readonly float minScale = 0.5f;
     private readonly float maxScale = 2f;
     private readonly float scrollSens = 0.01f;
 
-    private const float maxNormalAngle = 20f;
-    private const float maxPointDistance = 0.1f;
+    private static readonly Vector3 HiddenPos = new Vector3(-200, -2000, -2000);
+    private readonly Vector3 baseScale = new Vector3(0.3f, 0.3f, 0.3f);
+
 
     public float CurrentScale => currentScale;
 
-    public PortalPreview(Camera camera, float maxShootDistance, float offset)
+    public PortalPreview(Camera camera, float maxShootDistance, float offset, GameObject blue, GameObject orange)
     {
         this.playerCamera = camera;
         this.maxShootDistance = maxShootDistance;
         this.offset = offset;
+        bluePreviw = blue;
+        orangePreview = orange;
+
     }
 
-    public void SetPreviewPrefabs(GameObject blue, GameObject orange)
+ /*   public void SetPreviewPrefabs(GameObject blue, GameObject orange)
     {
         bluePreviewPrefab = blue;
         orangePreviewPrefab = orange;
-    }
+    }*/
 
     public void StartPreview(PortalType type)
     {
-        showingPreview = true;
-        currentScale = 1f;
-        currentTag = type == PortalType.Blue ? "BluePortal" : "OrangePortal";
 
-        var prefab = type == PortalType.Blue ? bluePreviewPrefab : orangePreviewPrefab;
-        currentPreview = Object.Instantiate(prefab);
+        if (type == PortalType.Blue)
+        {
+            currentPreviw = bluePreviw;
+        }
+        else
+        {
+            currentPreviw = orangePreview;
+        }
+        currentPreviw.transform.localScale = baseScale;
+        currentScale=1f;
+        showingPreview = true;
+
     }
 
     public void EndPreview()
     {
+        setDefaultPos();
         showingPreview = false;
-        if (currentPreview != null)
-            Object.Destroy(currentPreview);
-        currentPreview = null;
+    }
+
+    private void  setDefaultPos()
+    {
+        if (currentPreviw == bluePreviw)
+        {
+            bluePreviw.transform.position = HiddenPos;
+        }
+        else
+        {
+            orangePreview.transform.position = HiddenPos;
+        }
     }
 
     public void UpdatePreviewPosition()
     {
-        if (!showingPreview || currentPreview == null) return;
-
+        if (!showingPreview||currentPreviw==null) return;
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, maxShootDistance))
         {
             if (!hit.collider.CompareTag("validWall"))
             {
-                currentPreview.SetActive(false);
+                setDefaultPos();
                 return;
             }
 
-            currentPreview.transform.position = hit.point + hit.normal * offset;
-            currentPreview.transform.rotation = Quaternion.LookRotation(hit.normal);
+            currentPreviw.transform.position = hit.point + hit.normal * offset;
+            currentPreviw.transform.rotation = Quaternion.LookRotation(hit.normal);
 
-            if (IsValidSpawn(currentPreview))
-            {
-                if (!currentPreview.activeSelf)
-                    currentPreview.SetActive(true);
-            }
-            else
-            {
-                currentPreview.SetActive(false);
+            if (!(IsValidSpawn(currentPreviw))){
+
+                setDefaultPos();
             }
         }
         else
         {
-            currentPreview.SetActive(false);
+            setDefaultPos();
         }
     }
 
     public void HandleScroll(InputAction.CallbackContext context, string activeTag)
     {
-        if (!showingPreview || currentPreview == null || currentTag != activeTag) return;
+        if (!showingPreview || currentPreviw!=bluePreviw) return;
 
         Vector2 scrollValue = context.ReadValue<Vector2>();
 
@@ -97,7 +114,7 @@ public class PortalPreview
         {
             currentScale += scrollValue.y * 0.1f;
             currentScale = Mathf.Clamp(currentScale, minScale, maxScale);
-            currentPreview.transform.localScale = Vector3.one * currentScale;
+            currentPreviw.transform.localScale = baseScale * currentScale;
         }
     }
 
@@ -134,7 +151,6 @@ public class PortalPreview
                 return false;
                     }
         }
-        Debug.LogWarning("portal ready to be shoot");
         return true;
     }
 }

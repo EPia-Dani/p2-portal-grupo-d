@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PortalShooter
 {
     private readonly float maxShootDistance;
     private readonly float offset;
     private readonly GameObject preview;
-
+    private readonly Vector3 baseScale = new Vector3(0.3f, 0.3f, 0.3f);
     private GameObject bluePortal;
     private GameObject orangePortal;
 
 
     private static readonly Vector3 HiddenPos = new Vector3(-200, -2000, -2000);
-
+    private bool portalsActive=false;
     public PortalShooter(float maxShootDistance, float offset, GameObject previewPortal, GameObject bluePortal, GameObject orangePortal)
     {
         this.maxShootDistance = maxShootDistance;
@@ -19,6 +20,8 @@ public class PortalShooter
         this.preview = previewPortal;
         this.bluePortal = bluePortal;
         this.orangePortal = orangePortal;
+        bluePortal.transform.position = HiddenPos;
+        orangePortal.transform.position = HiddenPos;
     }
 
     public void HandleShoot(Camera cam, PortalType type, float scale)
@@ -44,32 +47,48 @@ public class PortalShooter
             if (type == PortalType.Blue)
             {
                 Debug.Log("trying to teleport");
-                Debug.Log(bluePortal.transform.position + "  " +  bluePortal.gameObject);
-                bluePortal.transform.position = hit.point+hit.normal*offset;
+                Debug.Log(bluePortal.transform.position + "  " + bluePortal.gameObject);
+                bluePortal.transform.position = hit.point + hit.normal * offset;
                 bluePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
                 bluePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                 bluePortal.GetComponent<Portal>().setScale(scale);
+                bluePortal.transform.localScale = baseScale * scale; ;
                 PortalEvents.RaiseOrangePortalActivated();
                 if (orangePortal.transform.position != HiddenPos)
                 {
+
+                    if (!portalsActive)
+                    {
+                        PortalEvents.RaisePortalActivated();
+
+                    }
+                    portalsActive = true;
                     resetPortals();//update new cameras 
                 }
-
 
             }
             else
             {
-                orangePortal.transform.position = hit.point+hit.normal*offset;
+                orangePortal.transform.position = hit.point + hit.normal * offset;
                 orangePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
                 orangePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                 PortalEvents.RaiseBluePortalActivated();
                 if (bluePortal.transform.position != HiddenPos)
                 {
+
+                    if (!portalsActive)
+                    {
+                        PortalEvents.RaisePortalActivated();
+
+                    }
+                    portalsActive = true;
                     resetPortals();//update new cameras 
                 }
+
             }
         }
-    }
+        }
+    
     private void resetPortals()
     {
         orangePortal.GetComponent<Portal>().setOtherPortal(bluePortal);

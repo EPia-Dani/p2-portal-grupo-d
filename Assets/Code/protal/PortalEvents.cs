@@ -16,7 +16,12 @@ public static class PortalEvents
     public static event System.Action<Portal,Collider> OnPortalUntriggered;
 
 
+    public static event System.Action OnPortalActivated;
 
+    public static void RaisePortalActivated()
+    {
+        OnPortalActivated?.Invoke();
+    }
     public static void RaisePlayerTeleported(Portal fromPortal, Portal toPortal, GameObject player)
     {
         OnPlayerTeleported?.Invoke(fromPortal, toPortal, player);
