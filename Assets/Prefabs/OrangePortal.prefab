@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4669903458852156603}
   - component: {fileID: 6046183140529501221}
   - component: {fileID: 8389191683197657785}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 301079820753813951}
   - component: {fileID: 5956567984757519204}
   - component: {fileID: 3647659783776380138}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: OrangeCamera
   m_TagString: OrangePortal
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 7958154086393286794}
   - component: {fileID: 7503337904835140082}
   - component: {fileID: 697204993648031296}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: OrangePortal
   m_TagString: OrangePortal
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5538077, y: 2.3447993, z: 2.045309}
+  m_Size: {x: 1.1033995, y: 2.3447993, z: 2.045309}
   m_Center: {x: -0.011791468, y: -0.08227241, z: 0.9016743}
 --- !u!1 &8123785766846015154
 GameObject:
@@ -394,8 +394,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 468253418453579492}
+  - component: {fileID: 6428004013646119640}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: collider check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,3 +417,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2702649977223253509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6428004013646119640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8123785766846015154}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3669548, y: 1.8173552, z: 0}
+  m_Center: {x: -0.005460739, y: -0.019685268, z: 0.010649204}

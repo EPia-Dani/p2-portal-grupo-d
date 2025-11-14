@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3290554119854082864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8712750693675491704}
+  - component: {fileID: 9216699092293537400}
+  m_Layer: 0
+  m_Name: collider check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8712750693675491704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290554119854082864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4639117109143894998}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9216699092293537400
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290554119854082864}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.332425, y: 1.7176714, z: 0}
+  m_Center: {x: -0.003651172, y: 0.00004339218, z: -0.04062789}
 --- !u!1 &4047247251922065781
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +68,7 @@ GameObject:
   - component: {fileID: 7713043098960144506}
   - component: {fileID: 4280791154653376316}
   - component: {fileID: 6364136226789628069}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BluePortal
   m_TagString: BluePortal
   m_Icon: {fileID: 0}
@@ -37,6 +90,7 @@ Transform:
   m_Children:
   - {fileID: 6069010398249455711}
   - {fileID: 4474212867182824541}
+  - {fileID: 8712750693675491704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &7790431049900044548
@@ -159,7 +213,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5538077, y: 2.3447993, z: 1.8979536}
+  m_Size: {x: 1.14341, y: 2.3447993, z: 1.8979536}
   m_Center: {x: -0.011791468, y: -0.08227241, z: 0.8279968}
 --- !u!1 &4336331585322787517
 GameObject:
@@ -173,7 +227,7 @@ GameObject:
   - component: {fileID: 7233534253908203119}
   - component: {fileID: 4072363884268128969}
   - component: {fileID: 3176592915338174318}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BlueCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +363,7 @@ GameObject:
   - component: {fileID: 6069010398249455711}
   - component: {fileID: 5851881702893323469}
   - component: {fileID: 7462473442113892811}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Portal
   m_TagString: BluePortal
   m_Icon: {fileID: 0}
