@@ -94,7 +94,11 @@ public class FPS_Controller : MonoBehaviour
         if (controller.isGrounded)
         {
             if (_velocity.y < 0f) _velocity.y = -2f;
+
+            _velocity.x = Mathf.Lerp(_velocity.x, 0f, 20f * Time.deltaTime);
+            _velocity.z = Mathf.Lerp(_velocity.z, 0f, 20f * Time.deltaTime);
         }
+
 
         _velocity.y += gravity * Time.deltaTime;
         controller.Move(_velocity * Time.deltaTime);
@@ -120,41 +124,41 @@ public class FPS_Controller : MonoBehaviour
 
     private void HandleTeleportEvent(Portal fromPortal, Portal toPortal, GameObject player)
     {
-        
         controller.enabled = false;
 
         Transform portalA = fromPortal.transform;
         Transform portalB = toPortal.transform;
 
-        //calculate position
+        // --- POSICIÓN ---
         Vector3 localPos = portalA.InverseTransformPoint(transform.position);
-        //localPos.z -= 0.03f;
         localPos.z = -localPos.z;
         localPos.x = -localPos.x;
         Vector3 finalPos = portalB.TransformPoint(localPos);
 
-        //calculate dir
+        // --- DIRECCIÓN ---
         Vector3 localDir = portalA.InverseTransformDirection(transform.forward);
         localDir.z = -localDir.z;
         localDir.x = -localDir.x;
         Vector3 finalDir = portalB.TransformDirection(localDir);
 
+        // --- ROTACIÓN DE CUERPO Y CÁMARA ---
         Quaternion camRot = toPortal.reflectionCamera.transform.rotation;
-
         Quaternion bodyYaw = Quaternion.Euler(0f, camRot.eulerAngles.y, 0f);
         transform.SetPositionAndRotation(finalPos, bodyYaw);
 
         float camPitch = NormalizeAngle(camRot.eulerAngles.x);
         mPitchController.localRotation = Quaternion.Euler(camPitch, 0f, 0f);
-
-        // Actualizar valores internos del controlador de c�mara
         _mYaw = NormalizeAngle(transform.eulerAngles.y);
         _mPitch = NormalizeAngle(mPitchController.localEulerAngles.x);
 
-        //_velocity = Vector3.zero;
+        // --- VELOCIDAD / INERCIA ---
+        // Transformar la velocidad relativa al portal de entrada hacia la del portal de salida
+        Vector3 localVelocity = portalA.InverseTransformDirection(_velocity);
+        localVelocity.z = -localVelocity.z;
+        localVelocity.x = -localVelocity.x;
+        _velocity = portalB.TransformDirection(localVelocity);
 
         controller.enabled = true;
-
     }
     public Vector3 GetVelocity()
     {
