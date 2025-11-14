@@ -10236,6 +10236,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8629228519220832440}
     m_Modifications:
+    - target: {fileID: 1756462665078463330, guid: 10abe50e80a8aeb4f9e95f4110904935,
+        type: 3}
+      propertyPath: cubePrefab
+      value: 
+      objectReference: {fileID: 7237218119182031161, guid: d65ad8674a58786a4a9d125b067ccd72,
+        type: 3}
     - target: {fileID: 3422390121315771511, guid: 10abe50e80a8aeb4f9e95f4110904935,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -468,7 +468,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -704,14 +704,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a5a79dcc351ceccad7aa98201b9fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OrangePortal: {fileID: 0}
-  BluePortal: {fileID: 0}
-  previewPortal: {fileID: 0}
-  BluePortalPreview: {fileID: 0}
-  OrangePortalPreview: {fileID: 0}
+  orangePortal: {fileID: 3520759203000643978, guid: 612094d5b4bbb8d44ab79ca8fd88695e,
+    type: 3}
+  bluePortal: {fileID: 4047247251922065781, guid: 5970d6559b325904bbbd1afa39017616,
+    type: 3}
+  previewPortal: {fileID: 3995635571878992160, guid: 8308b3f5b2d31688f95583371d939668,
+    type: 3}
+  bluePortalPreview: {fileID: 8935512764533715155, guid: 15275f70af4e71a1a81e7f128730ac26,
+    type: 3}
+  orangePortalPreview: {fileID: 441518827230272247, guid: eb1959bf1ba692bf8aa209d7c2c973d1,
+    type: 3}
   maxShootDistance: 100
-  maxNormalAngle: 20
-  maxPointDistance: 0.1
   offset: 0.0001
 --- !u!4 &1416410814073962745 stripped
 Transform:

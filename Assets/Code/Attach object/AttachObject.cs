@@ -6,6 +6,7 @@ public class AttachObject : MonoBehaviour
     GameObject attachObject;
 
     string boxTag = "Cube";
+    string refleectionBoxTag = "RefractionCube";
     string turretTag = "Turret";
     public Transform holdPosition;
     private float maxCatchDistance = 20f;
@@ -46,7 +47,7 @@ public class AttachObject : MonoBehaviour
             {
                 //Debug.Log(hit.collider.gameObject.tag);
                 //Debug.Log("Raycast throw");
-                if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag))
+                if (hit.collider.CompareTag(boxTag) || hit.collider.CompareTag(turretTag) || hit.collider.CompareTag(refleectionBoxTag))
                 {
 
                     PickUp(hit.collider.gameObject);

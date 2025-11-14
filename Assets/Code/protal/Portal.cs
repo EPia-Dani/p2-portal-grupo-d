@@ -48,12 +48,14 @@ public class Portal : MonoBehaviour
             Vector3 worldPosition = playerCamera.transform.position;
             Vector3 localPosition = reflectionTransform.InverseTransformPoint(worldPosition);
             localPosition.z = -localPosition.z;
+            //localPosition.y = -localPosition.y;
             localPosition.x = -localPosition.x;
             otherPortal.reflectionCamera.transform.position = otherPortal.transform.TransformPoint(localPosition);
 
             Vector3 worldDirection = playerCamera.transform.forward;
             Vector3 localDirection = reflectionTransform.InverseTransformDirection(worldDirection);
             localDirection.z = -localDirection.z;
+            //localDirection.y = -localDirection.y;
             localDirection.x = -localDirection.x;
             otherPortal.reflectionCamera.transform.forward = otherPortal.transform.TransformDirection(localDirection);
 
