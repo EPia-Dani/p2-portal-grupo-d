@@ -11,7 +11,7 @@ public class Turret : MonoBehaviour
     public float m_MaxAngle = 45f;
 
     [Header("Tracking")]
-    public Transform player;
+    private Transform player;
     public float rotationSpeed = 4f;
 
     private Rigidbody rb;
@@ -38,7 +38,7 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
-        
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.isKinematic = false;
@@ -114,7 +114,7 @@ public class Turret : MonoBehaviour
 
             if (hit.collider.CompareTag("Player"))
             {
-                PlayerHealth ph = hit.collider.GetComponentInParent<PlayerHealth>();
+                PlayerHealth ph = hit.collider.GetComponent<PlayerHealth>();
                 if (ph != null)
                     ph.TakeDamage(ph.maxHealth);
             }

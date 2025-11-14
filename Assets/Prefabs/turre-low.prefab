@@ -9853,19 +9853,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.17
+      value: 8.624001
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.57
+      value: -2.0830002
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.02
+      value: -6.942997
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99333906
+      value: -0.99862814
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9873,7 +9873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.115228064
+      value: -0.052363154
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalRotation.z
@@ -9885,11 +9885,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 13.234
+      value: 366.003
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300004, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -9968,13 +9972,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxAngle: 30
-  player: {fileID: 6460784896127851524, guid: 7e4bdabc6af88014196841c4e7f31ba8, type: 3}
+  player: {fileID: 0}
   rotationSpeed: 4
-  detectionRange: 5
+  detectionRange: 6
   visionMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  fireRange: 20
+  fireRange: 5
   canSeePlayer: 0
   fallSound: {fileID: 8300000, guid: c56a760fe4313994a811cdc69a67d791, type: 3}
   detectSound: {fileID: 8300000, guid: 3a31e8a268dd9c942b30768c1f996dd8, type: 3}

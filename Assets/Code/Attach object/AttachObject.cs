@@ -67,7 +67,6 @@ public class AttachObject : MonoBehaviour
         Rigidbody rb = o.GetComponent<Rigidbody>();
         if(rb != null)
         {
-            Debug.Log("picking up something");
             originalParent = rb.transform.parent;
             holding = true; //save original parent
 
