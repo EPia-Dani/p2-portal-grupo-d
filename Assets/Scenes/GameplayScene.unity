@@ -38061,7 +38061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasPrincipal: {fileID: 248030631}
   gameOverUI: {fileID: 248030630}
-  checkpointUI: {fileID: 0}
+  checkpointUI: {fileID: 1614748171}
   player: {fileID: 399856691}
 --- !u!4 &1252898971
 Transform:
@@ -51535,13 +51535,19 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1614748171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6040094665324652936, guid: 9cdf9872baa9a5341bf75a06d82a05e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 248030629}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1614748173 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6634427811626067513, guid: 9cdf9872baa9a5341bf75a06d82a05e7,
     type: 3}
   m_PrefabInstance: {fileID: 248030629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1614748171}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
