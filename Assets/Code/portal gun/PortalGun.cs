@@ -27,7 +27,7 @@ public class PortalGun : MonoBehaviour
             Debug.LogWarning("PortalGun: camera not set");
 
         previewHandler = new PortalPreview(playerCamera, maxShootDistance, offset);
-        shooterHandler = new PortalShooter(maxShootDistance, offset, previewPortal);
+        shooterHandler = new PortalShooter(maxShootDistance, offset, previewPortal,bluePortal,orangePortal);
 
         previewHandler.SetPreviewPrefabs(bluePortalPreview, orangePortalPreview);
     }
@@ -39,12 +39,12 @@ public class PortalGun : MonoBehaviour
 
     public void OnLeftClick(InputAction.CallbackContext context)
     {
-        HandleInput(context, bluePortal, tagBlue, PortalType.Blue);
+        HandleInput(context,PortalType.Blue);
     }
 
     public void OnRightClick(InputAction.CallbackContext context)
     {
-        HandleInput(context, orangePortal, tagOrange, PortalType.Orange);
+        HandleInput(context, PortalType.Orange);
     }
 
     public void OnScroll(InputAction.CallbackContext context)
@@ -52,7 +52,7 @@ public class PortalGun : MonoBehaviour
         previewHandler?.HandleScroll(context, tagBlue);
     }
 
-    private void HandleInput(InputAction.CallbackContext context, GameObject portalPrefab, string tag, PortalType type)
+    private void HandleInput(InputAction.CallbackContext context, PortalType type)
     {
         if (context.started)
         {
@@ -66,7 +66,7 @@ public class PortalGun : MonoBehaviour
         {
             float finalScale = previewHandler.CurrentScale;
             previewHandler.EndPreview();
-            shooterHandler.HandleShoot(playerCamera, portalPrefab, tag, finalScale);
+            shooterHandler.HandleShoot(playerCamera, type, finalScale);
         }
     }
 }

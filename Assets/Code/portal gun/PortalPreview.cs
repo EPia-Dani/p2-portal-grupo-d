@@ -134,6 +134,7 @@ public class PortalPreview
                 return false;
                     }
         }
+        Debug.LogWarning("portal ready to be shoot");
         return true;
     }
 }
