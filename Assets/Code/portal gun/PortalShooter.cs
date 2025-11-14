@@ -21,6 +21,7 @@ public class PortalShooter
             if (!hit.collider.CompareTag("validWall")) return;
 
             GameObject preview = Object.Instantiate(previewPortal, hit.point, Quaternion.LookRotation(-hit.normal));
+            preview.transform.localScale = Vector3.one * scale;
             bool isValid = IsValidSpawn(preview, cam);
             Object.Destroy(preview);
 
