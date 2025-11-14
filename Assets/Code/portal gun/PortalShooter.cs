@@ -4,81 +4,78 @@ public class PortalShooter
 {
     private readonly float maxShootDistance;
     private readonly float offset;
-    private readonly GameObject previewPortal;
+    private readonly GameObject preview;
 
-    public PortalShooter(float maxShootDistance, float offset, GameObject previewPortal)
+    private GameObject bluePortal;
+    private GameObject orangePortal;
+
+
+    private static readonly Vector3 HiddenPos = new Vector3(-200, -2000, -2000);
+
+    public PortalShooter(float maxShootDistance, float offset, GameObject previewPortal, GameObject bluePortal, GameObject orangePortal)
     {
         this.maxShootDistance = maxShootDistance;
         this.offset = offset;
-        this.previewPortal = previewPortal;
+        this.preview = previewPortal;
+        this.bluePortal = bluePortal;
+        this.orangePortal = orangePortal;
     }
 
-    public void HandleShoot(Camera cam, GameObject portalPrefab, string tag, float scale)
+    public void HandleShoot(Camera cam, PortalType type, float scale)
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (!hit.collider.CompareTag("validWall")) return;
 
-            GameObject preview = Object.Instantiate(previewPortal, hit.point, Quaternion.LookRotation(-hit.normal));
-            preview.transform.localScale = Vector3.one * scale;
+            preview.transform.position = hit.point;
+            preview.transform.rotation = Quaternion.LookRotation(hit.normal);
+            if (type == PortalType.Blue)
+            {
+                preview.transform.localScale = Vector3.one * scale;
+            }
             bool isValid = IsValidSpawn(preview, cam);
-            Object.Destroy(preview);
+            preview.transform.position = HiddenPos;
 
             if (!isValid) return;
 
-            GameObject existingPortal = GameObject.FindGameObjectWithTag(tag);
-            if (existingPortal != null)
+
+            //move position
+            if (type == PortalType.Blue)
             {
-                existingPortal.SetActive(false);
-                Object.Destroy(existingPortal);
-            }
-
-            Vector3 spawnPos = hit.point + hit.normal * offset;
-            GameObject newPortal = Object.Instantiate(portalPrefab, spawnPos, Quaternion.LookRotation(hit.normal));
-
-            newPortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
-
-            if (tag == "OrangePortal")
-            {
-                GameObject other = GameObject.FindGameObjectWithTag("BluePortal");
+                Debug.Log("trying to teleport");
+                Debug.Log(bluePortal.transform.position + "  " +  bluePortal.gameObject);
+                bluePortal.transform.position = hit.point;
+                bluePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
+                bluePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
+                bluePortal.GetComponent<Portal>().setScale(scale);
                 PortalEvents.RaiseOrangePortalActivated();
-
-                if (other != null)
+                if (orangePortal.transform.position != HiddenPos)
                 {
-                    Portal otherPortalComponent = other.GetComponent<Portal>();
-                    Portal newPortalComponent = newPortal.GetComponent<Portal>();
-
-                    if (otherPortalComponent != null && newPortalComponent != null)
-                    {
-                        newPortalComponent.setOtherPortal(other);
-                        otherPortalComponent.setOtherPortal(newPortal);
-                    }
+                    resetPortals();//update new cameras 
                 }
+
+
             }
-            else if (tag == "BluePortal")
+            else
             {
-                // Ajustar escala del portal azul
-                newPortal.transform.localScale = Vector3.one * scale;
-                GameObject other = GameObject.FindGameObjectWithTag("OrangePortal");
+                orangePortal.transform.position = hit.point;
+                orangePortal.transform.rotation = Quaternion.LookRotation(hit.normal);
+                orangePortal.GetComponent<Portal>().setWall(hit.collider.gameObject);
                 PortalEvents.RaiseBluePortalActivated();
-
-                if (other != null)
+                if (bluePortal.transform.position != HiddenPos)
                 {
-                    Portal otherPortalComponent = other.GetComponent<Portal>();
-                    Portal newPortalComponent = newPortal.GetComponent<Portal>();
-
-                    if (otherPortalComponent != null && newPortalComponent != null)
-                    {
-                        newPortalComponent.setOtherPortal(other);
-                        otherPortalComponent.setOtherPortal(newPortal);
-                        newPortalComponent.setScale(scale);
-                    }
+                    resetPortals();//update new cameras 
                 }
             }
         }
     }
+    private void resetPortals()
+    {
+        orangePortal.GetComponent<Portal>().setOtherPortal(bluePortal);
+        bluePortal.GetComponent<Portal>().setOtherPortal(orangePortal);
 
+    }
     private bool IsValidSpawn(GameObject previewInstance,Camera cam)
     {
         Transform[] validPoints = previewInstance.GetComponentsInChildren<Transform>();
@@ -98,21 +95,28 @@ public class PortalShooter
  
  
                 if (!hit.collider.CompareTag("validWall")){
+                    Debug.Log("location invalid");
                     return false;
                 }
                 if (firstHitCollider == null)
                 {
+                    Debug.Log("location invalid");
                     firstHitCollider = hit.collider; 
                 }
                 else if (hit.collider != firstHitCollider)
                 {
+                    Debug.Log("location invalid");
+
                     return false;
                 }
             }
             else{
+                Debug.Log("location invalid");
+
                 return false;
                     }
         }
+        Debug.Log("Valid location");
         return true;
     }
 }
