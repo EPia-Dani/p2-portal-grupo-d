@@ -25,6 +25,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        gameObject.GetComponent<FPS_Controller>().enabled = false;
+        gameObject.GetComponent<CharacterController>().enabled = false;
         GameManager.instance.GameOver();
         PlayerDied?.Invoke();
     }

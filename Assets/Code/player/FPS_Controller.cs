@@ -129,19 +129,16 @@ public class FPS_Controller : MonoBehaviour
         Transform portalA = fromPortal.transform;
         Transform portalB = toPortal.transform;
 
-        // --- POSICIÓN ---
         Vector3 localPos = portalA.InverseTransformPoint(transform.position);
         localPos.z = -localPos.z;
         localPos.x = -localPos.x;
         Vector3 finalPos = portalB.TransformPoint(localPos);
 
-        // --- DIRECCIÓN ---
         Vector3 localDir = portalA.InverseTransformDirection(transform.forward);
         localDir.z = -localDir.z;
         localDir.x = -localDir.x;
         Vector3 finalDir = portalB.TransformDirection(localDir);
 
-        // --- ROTACIÓN DE CUERPO Y CÁMARA ---
         Quaternion camRot = toPortal.reflectionCamera.transform.rotation;
         Quaternion bodyYaw = Quaternion.Euler(0f, camRot.eulerAngles.y, 0f);
         transform.SetPositionAndRotation(finalPos, bodyYaw);
@@ -151,8 +148,6 @@ public class FPS_Controller : MonoBehaviour
         _mYaw = NormalizeAngle(transform.eulerAngles.y);
         _mPitch = NormalizeAngle(mPitchController.localEulerAngles.x);
 
-        // --- VELOCIDAD / INERCIA ---
-        // Transformar la velocidad relativa al portal de entrada hacia la del portal de salida
         Vector3 localVelocity = portalA.InverseTransformDirection(_velocity);
         localVelocity.z = -localVelocity.z;
         localVelocity.x = -localVelocity.x;

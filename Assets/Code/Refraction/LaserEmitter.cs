@@ -6,8 +6,16 @@ public class LaserEmitter : MonoBehaviour
     public LayerMask collisionMask = 3;
     public LineRenderer lineRenderer;
 
+    private int lastFrameProcessed = -1;  
+
     void Update()
     {
+
+        if (lastFrameProcessed == Time.frameCount)
+            return;
+
+        lastFrameProcessed = Time.frameCount;
+
         if (!lineRenderer) return;
 
         lineRenderer.enabled = true;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,50 @@ public class GameManager : MonoBehaviour
 
     private Vector3 lastCheckpointPos;
 
+
+    private bool bluePortalOn;
+    private bool orangePortalOn;
+    [SerializeField] private Image crossair;
+
+    [Header("Images for crossair")]
+    [SerializeField] private Sprite crossairOB;
+    [SerializeField] private Sprite crossairO;
+    [SerializeField] private Sprite crossairB;
+    private void OnEnable()
+    {
+        PortalEvents.OnBluePortalActivated += OnBluePortal;
+        PortalEvents.OnOrangePortalActivated += OnOrangePortal;
+    }
+
+    private void OnBluePortal()
+    {
+        bluePortalOn = true;
+        UpdateCrossair();
+    }
+
+    private void OnOrangePortal()
+    {
+        orangePortalOn = true;
+        UpdateCrossair();
+    }
+    private void UpdateCrossair()
+    {
+        if (bluePortalOn)
+        {
+            if (orangePortalOn)
+            {
+                crossair.sprite = crossairOB;
+                return;
+            }
+            crossair.sprite = crossairB;
+            return;
+        }
+        if (orangePortalOn)
+        {
+            crossair.sprite = crossairO;
+            return;
+        }
+    }
     void Awake()
     {
         if (instance == null)
@@ -76,6 +121,8 @@ public class GameManager : MonoBehaviour
             player.position = lastCheckpointPos;
         else
             SceneManager.LoadScene("GameplayScene");
+        player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponent<FPS_Controller>().enabled = true;
     }
 
     public void ExitGame()
