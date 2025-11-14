@@ -13,7 +13,8 @@ public class AttachObject : MonoBehaviour
     private bool holding = false;
     private Transform originalParent;
 
-    private float forceMulti = 3f;
+    [SerializeField]
+    public float forceMulti = 6f;
     
     [SerializeField] private LayerMask cubeLayer;
     [SerializeField] private LayerMask turretLayer;
