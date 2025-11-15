@@ -1,8 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/IFF0cJF3)
 # Prac2 Portal
 
-# Sistema de Portales Interactivo
-**Desarrollo Académico en Entornos 3D**
+# Portal
+**Desarrollo de juegos 3D**
+**Link al video de presentación:** [https://youtu.be/hMJFw79hv60](https://youtu.be/hMJFw79hv60) 
 
 ## Descripción General
 Este proyecto constituye un prototipo funcional inspirado en mecánicas de portales.
